@@ -4,7 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 public class Test {
 
@@ -14,9 +18,9 @@ public class Test {
     private String firstName;
     private String lastName;
 
-    protected Customer() {}
+    protected void Customer() {}
 
-    public Customer(String firstName, String lastName) {
+    public void Customer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
