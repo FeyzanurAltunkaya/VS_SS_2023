@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 const FileUpload = () => {
     const [selectedFile, setSelectedFile] = useState(null);
-
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
@@ -12,10 +11,10 @@ const FileUpload = () => {
             const formData = new FormData();
             formData.append('file', selectedFile);
 
-            // Hier kannst du den Upload-Request an deinen Server senden
-            // Verwende z.B. Fetch oder eine AJAX-Bibliothek wie Axios
+            // Hier den Upload-Request an den Server senden!!
+            // z.B. Fetch oder eine AJAX-Bibliothek wie Axios
 
-            // Beispiel mit Fetch:
+            // bsp mit Fetch:
             fetch('/upload', {
                 method: 'POST',
                 body: formData
