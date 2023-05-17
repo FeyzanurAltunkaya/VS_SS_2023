@@ -1,8 +1,7 @@
-FROM openjdk
-WORKDIR /app
+FROM openjdk:8-jre-slim
 
-COPY ./target/projectfiler-docker.jar /app/projectfiler-docker.jar
+VOLUME /tmp
 
-EXPOSE 3000
+COPY /target/docker-postgres-springboot-demo-0.0.1-SNAPSHOT.jar docker-postgres-springboot-demo-0.0.1-SNAPSHOT.jar
 
-CMD ["java", "-jar", "projectfiler-docker.jar"]
+ENTRYPOINT ["java","-jar","docker-postgres-springboot-demo-0.0.1-SNAPSHOT.jar"]
