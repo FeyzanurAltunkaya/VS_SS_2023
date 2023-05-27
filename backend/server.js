@@ -11,7 +11,7 @@ app.use(cors());
 app.post('/upload', upload.single('file'), (req, res) => {
     const originalName = req.file.originalname;
     const fileName = Date.now() + '-' + originalName;
-    //auf path achten
+
     const filePath = req.file.path;
     const targetPath = 'uploads/' + fileName;
 
