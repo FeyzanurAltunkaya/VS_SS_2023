@@ -16,7 +16,7 @@ const FileUpload = () => {
     };
 
     useEffect(() => {
-        // Funktion aufrufen, um die hochgeladenen Dateien abzurufen
+        // Funktion aufrufen, um die hochgeladenen Dateien abrufen zu können
         fetchUploadedFiles();
     }, []);
     const handleFileChange = (event) => {
