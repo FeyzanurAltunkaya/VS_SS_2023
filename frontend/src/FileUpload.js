@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const FileUpload = () => {
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFiles, setSelectedFiles] = useState([]);
     const [uploadedFiles, setUploadedFiles] = useState([]);
 
     const fetchUploadedFiles = () => {
@@ -20,14 +20,15 @@ const FileUpload = () => {
         fetchUploadedFiles();
     }, []);
     const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
+        setSelectedFiles(Array.from(event.target.files));
     };
 
     const handleUpload = () => {
-        if (selectedFile) {
+        if (selectedFiles.length > 0) {
             const formData = new FormData();
-            formData.append('file', selectedFile);
-
+            selectedFiles.forEach((file) =>{
+                formData.append('files', file);
+            });
             // Hier den Upload-Request an den Server senden!!
             // z.B. Fetch oder eine AJAX-Bibliothek wie Axios
 
@@ -52,7 +53,7 @@ const FileUpload = () => {
             fetch(`http://localhost:8000/delete/${fileName}`, {
                 method: 'DELETE',
             })
-                .then((response) => response.json())
+                .then((response) => response.text())
                 .then((data) => {
                     console.log(data); // Serverantwort
                     // Aktualisiere die Liste der hochgeladenen Dateien
@@ -66,7 +67,7 @@ const FileUpload = () => {
 
         return (
             <div>
-                <input type="file" onChange={handleFileChange}/>
+                <input type="file" onChange={handleFileChange} multiple/>
                 <button onClick={handleUpload}>Hochladen</button>
                 <h2>Hochgeladene Dateien:</h2>
                 <ul>
