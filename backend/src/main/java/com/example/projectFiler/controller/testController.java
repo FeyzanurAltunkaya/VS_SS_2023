@@ -13,8 +13,4 @@ public class testController {
   public String home() {
     return "Dockerizing Spring Boot Application";
   }
-
-  public static void main(String[] args) {
-    SpringApplication.run(testController.class, args);
-  }
 }
