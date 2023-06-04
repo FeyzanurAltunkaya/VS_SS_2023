@@ -1,15 +1,13 @@
 package com.example.projectFiler.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 @Entity
-@Getter
-@Setter
-@ToString
 @EnableAutoConfiguration
 public class UserEntity {
   @Id
@@ -21,4 +19,11 @@ public class UserEntity {
 
   @Column(nullable = false)
   private String lastName;
+
+  @Column(nullable = false)
+  private String password;
+
+  @Column(nullable = false)
+  private boolean isLoggedIn = false;
+
 }
