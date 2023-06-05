@@ -1,23 +1,32 @@
   version: "3"
   services:
-    springBootApp:
-      image: uday07/docker-postgres-springboot-demo:latest
-      container_name: docker-postgres-springboot-demo-app
-      environment:
-        - POSTGRES_HOST=docker-postgres-springboot-demo-db
-      ports:
-        - "8081:8081"
-      networks:
-        - network
-      depends_on:
-        - postgresDb
-      restart: on-failure
+    #springBootApp:
+    #  image: uday07/docker-postgres-springboot-demo:latest
+     # container_name: docker-postgres-springboot-demo-app
+     # environment:
+     #   - POSTGRES_HOST=docker-postgres-springboot-demo-db
+     # ports:
+     #   - "8081:8081"
+     # networks:
+      #  - network
+     # depends_on:
+      #  - db
+     # restart: on-failure
 
-    postgresDb:
+    adminer:
+      image: adminer
+      restart: always
+      ports:
+        - 8081:8080
+      depends_on:
+        - db
+      #host.docker.internal:5432
+# run: mvn spring-boot:run
+    db:
       image: postgres:13.2
       container_name: docker-postgres-springboot-demo-db
       ports:
-        - "5434:5432"
+        - "5432:5432"
       networks:
         - network
       volumes:
@@ -25,10 +34,12 @@
       environment:
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=root
-        - POSTGRES_DB=spring_boot_postgres_db
+        - POSTGRES_DB=postgres
 
   networks:
     network:
 
   volumes:
     volume:
+
+
