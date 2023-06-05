@@ -5,8 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.*;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @EnableAutoConfiguration
 public class UserEntity {
@@ -14,16 +19,18 @@ public class UserEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Column(nullable = false)
+  //@Column(name = "first_name", nullable = false)
   private String firstName;
 
-  @Column(nullable = false)
+  //@Column(name = "last_name", nullable = false)
   private String lastName;
 
-  @Column(nullable = false)
+  //@Column(name = "password", nullable = false)
   private String password;
 
-  @Column(nullable = false)
+  //@Column(name = "is_logged_in", nullable = false)
   private boolean isLoggedIn = false;
 
+  //@Column(name = "is_admin", nullable = false)
+  private boolean isAdmin = false;
 }
