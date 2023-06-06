@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import FileUpload from './FileUpload';
-import Login from './Login';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import FileUpload from './pages/FileUpload.js';
+import Login from './pages/Login';
+import Navbar from './components/Navbar';
 
 const App = () => {
     const [loggedIn, setLoggedIn] = useState(false);
+    const [username, setUsername] = useState('');
     const navigate = useNavigate();
 
-    const handleLoginSuccess = () => {
+    const handleLoginSuccess = (username) => {
         setLoggedIn(true);
+        setUsername(username);
         navigate('/FileUpload');
     };
 
@@ -19,11 +22,14 @@ const App = () => {
                     path="/"
                     element={<Login onLoginSuccess={handleLoginSuccess} />}
                 />
-                <Route
-                    path="/FileUpload"
-                    element={<FileUpload />}
-                />
+                {loggedIn && (
+                    <Route
+                        path="/FileUpload"
+                        element={<FileUpload />}
+                    />
+                )}
             </Routes>
+            {loggedIn && <Navbar />}
         </div>
     );
 };
