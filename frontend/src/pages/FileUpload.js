@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const FileUpload = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -66,16 +68,21 @@ const FileUpload = () => {
 
     return (
         <div>
+            <div className="your-directories">
+
             <input
                 type="file"
                 onChange={handleFileChange}
-                className="file-input"
+                className="file-input-container"
                 multiple
             />
-            <button onClick={handleUpload} className="upload-button">
-                Hochladen
-            </button>
-            <h2>Hochgeladene Dateien:</h2>
+                <button onClick={handleUpload} className="upload-button">
+                    <div className="upload-icon-container">
+                    <FontAwesomeIcon icon={faUpload} />
+                        </div>
+                </button>
+
+                <h2>Hochgeladene Dateien:</h2>
             <ul className="file-list">
                 {uploadedFiles.map((file) => (
                     <li key={file} className="file-item">
@@ -83,8 +90,11 @@ const FileUpload = () => {
                         <button onClick={() => handleDelete(file)}>Löschen</button>
                     </li>
                 ))}
+
             </ul>
+            </div>
         </div>
+
     );
 
 };
