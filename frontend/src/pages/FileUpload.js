@@ -64,27 +64,29 @@ const FileUpload = () => {
 
         };
 
-        return (
-            <div>
-                <input
-                    type="file"
-                    onChange={handleFileChange}
-                    className="file-input"
-                    multiple
-                />
-                <button onClick={handleUpload} className="upload-button">
-                    Hochladen
-                </button>
-                <h2>Hochgeladene Dateien:</h2>
-                <ul>
-                    {uploadedFiles.map((file) => (
-                        <li key={file}>{file}
-                            <button onClick={() => handleDelete(file)}>Löschen</button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        );
-    };
+    return (
+        <div>
+            <input
+                type="file"
+                onChange={handleFileChange}
+                className="file-input"
+                multiple
+            />
+            <button onClick={handleUpload} className="upload-button">
+                Hochladen
+            </button>
+            <h2>Hochgeladene Dateien:</h2>
+            <ul className="file-list">
+                {uploadedFiles.map((file) => (
+                    <li key={file} className="file-item">
+                        {file}
+                        <button onClick={() => handleDelete(file)}>Löschen</button>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+
+};
 
 export default FileUpload;

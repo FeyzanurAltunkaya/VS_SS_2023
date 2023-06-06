@@ -73,3 +73,21 @@ button:hover {
   display: block;
   margin-top: 20%;
 }
+.file-list {
+  list-style: none;
+  padding: 0;
+  margin: 5px;
+
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: #61dafb;
+}
+
+.file-item button {
+  margin-left: 10px;
+  background-color: black;
+}
