@@ -21,7 +21,7 @@ const Login = ({ onLoginSuccess }) => {
         if (username === 'admin' && password === 'password') {
             console.log('Erfolgreich eingeloggt!');
             onLoginSuccess();
-            navigate('/file-upload');
+            navigate('/FileUpload');
         } else {
             console.log('Ungültiger Benutzername oder Passwort!');
             // Füge hier weitere Aktionen hinzu, wie eine Fehlermeldung anzeigen
