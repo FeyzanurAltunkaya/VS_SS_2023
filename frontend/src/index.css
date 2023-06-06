@@ -17,6 +17,7 @@ code {
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
+  margin-top: 40px;
 }
 
 h2 {
@@ -49,4 +50,26 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #007bff;
+  padding: 10px;
+  z-index: 999; /* Optional: Damit die Navbar über anderen Inhalten angezeigt wird */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upload-button {
+  display: block;
+  margin-top: 20%;
+}
+
+.file-input {
+  display: block;
+  margin-top: 20%;
 }
