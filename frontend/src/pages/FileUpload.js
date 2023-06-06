@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 const FileUpload = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -67,8 +66,15 @@ const FileUpload = () => {
 
         return (
             <div>
-                <input type="file" onChange={handleFileChange} multiple/>
-                <button onClick={handleUpload}>Hochladen</button>
+                <input
+                    type="file"
+                    onChange={handleFileChange}
+                    className="file-input"
+                    multiple
+                />
+                <button onClick={handleUpload} className="upload-button">
+                    Hochladen
+                </button>
                 <h2>Hochgeladene Dateien:</h2>
                 <ul>
                     {uploadedFiles.map((file) => (

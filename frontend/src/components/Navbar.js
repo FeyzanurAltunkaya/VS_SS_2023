@@ -1,9 +1,6 @@
 //Navbar
-import { Link, useLocation} from 'react-router-dom'
-import * as Icons from "react-icons/fa"
 import "../index.css"
-import Login from './Login';
-import { useState } from 'react';
+import Login from '../pages/Login';
 
 
 
@@ -13,15 +10,15 @@ const Navbar = () => {
     const userName = Login.username;
 
     return (
-        <header>
+        <header className="navbar">
             <section className="navbar-container">
                 <div className="title_text">
-                    <p>Project Filer</p>
+                    <p>Project Filer</p> {userName + ': Welcome'}
                 </div>
-
             </section>
         </header>
-    )
-}
+    );
+};
+
 export default Navbar
 
