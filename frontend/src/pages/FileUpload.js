@@ -51,9 +51,9 @@ const FileUpload = () => {
                 method: 'POST',
                 body: formData,
             })
-                .then((response) => response.json())
+                .then((response) => response.text()) // Text statt JSON
                 .then((data) => {
-                    console.log(data); // Serverantwort
+                    console.log(data); // Serverantwort als Text
                     fetchUploadedFiles();
                 })
                 .catch((error) => {
