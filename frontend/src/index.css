@@ -1,14 +1,10 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
 
 .container {
@@ -51,6 +47,7 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+
 .navbar {
   position: fixed;
   top: 0;
@@ -69,7 +66,6 @@ button:hover {
   display: flex;
   align-items: center;
 }
-
 
 .file-input {
   display: flex;
@@ -104,13 +100,12 @@ button:hover {
   bottom: -5px;
 }
 
-
 .file-item button {
   background-color: gray;
   margin-left: 10px;
 }
 
-.your-directories{
+.your-directories {
   background: white;
   width: 100%;
   position: fixed;
@@ -119,14 +114,61 @@ button:hover {
   left: 0;
   padding: 10px;
   box-sizing: border-box;
-
-
 }
+
 h2 {
   font-size: 1rem;
   text-align: left;
   width: 50%;
-
-
 }
 
+.create-folder {
+  background: white;
+  width: 100%;
+  position: fixed;
+  text-align: left;
+  bottom: 20px;
+  left: 0;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.create-folder input[type='text'] {
+  width: 70%;
+  margin-right: 10px;
+}
+
+.create-folder button {
+  background-color: green;
+  color: white;
+}
+
+.folder-list {
+  list-style: none;
+  padding: 0;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.folder-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.folder-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: gray;
+  bottom: -5px;
+}
+
+.folder-item button {
+  background-color: gray;
+  margin-left: 10px;
+}
