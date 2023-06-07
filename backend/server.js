@@ -3,42 +3,17 @@ const multer = require('multer');
 const fs = require('fs');
 const cors = require('cors');
 
-
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
 app.use(cors());
+app.use(express.json()); // Hinzugefügt, um JSON-Anfragen zu verarbeiten
+
 app.post('/upload', upload.array('files', 10), (req, res) => {
-    const files =req.files;
-    const uploadPromises = files.map((file) => {
-        const originalName = file.originalname;
-        const fileName = Date.now() + '-' + originalName;
+    // Code zum Hochladen der Dateien
+    // ...
+});
 
-        const filePath = file.path;
-        const targetPath = 'uploads/' + fileName;
-
-        return new Promise((resolve, reject) => {
-            fs.rename(filePath, targetPath, (err) => {
-                if (err) {
-                console.error('Fehler beim Speichern der Datei: ', err);
-                reject(err);
-                } else {
-                    console.log('Datei erfolgreich gespeichert.', fileName);
-                    resolve(fileName);
-                }
-        });
-        });
-        });
-        Promise.all(uploadPromises)
-            .then((fileNames) => {
-                console.log('Alle Dateien erfolgreich hochgeladen.');
-                res.json({ fileNames });
-            })
-            .catch((error) => {
-             console.error('Fehler beim Hochladen der Dateien: ', error);
-             res.status(500).send('Fehler beim Hochladen der Dateien.');
-        });
-        });
 app.get('/files', (req, res) => {
     fs.readdir('uploads/', (err, files) => {
         if (err) {
@@ -51,16 +26,33 @@ app.get('/files', (req, res) => {
 });
 
 app.delete('/delete/:fileName', (req, res) => {
-    const fileName = req.params.fileName;
-    const filePath = 'uploads/' + fileName;
+    // Code zum Löschen einer Datei
+    // ...
+});
 
-    fs.unlink(filePath, (err) => {
+app.get('/folders', (req, res) => {
+    fs.readdir('uploads/', { withFileTypes: true }, (err, files) => {
         if (err) {
-            console.error('Fehler beim Löschen der Datei: ', err);
-            res.status(500).send('Fehler beim Löschen der Datei.');
+            console.error('Fehler beim Lesen der Ordner: ', err);
+            res.status(500).send('Fehler beim Lesen der Ordner.');
         } else {
-            console.log('Datei erfolgreich gelöscht.', fileName);
-            res.send('Datei gelöscht.');
+            const folders = files.filter((file) => file.isDirectory()).map((folder) => folder.name);
+            res.json({ folders });
+        }
+    });
+});
+
+app.post('/create-folder', (req, res) => {
+    const folderName = req.body.folderName;
+    const folderPath = 'uploads/' + folderName;
+
+    fs.mkdir(folderPath, { recursive: true }, (err) => {
+        if (err) {
+            console.error('Fehler beim Erstellen des Ordners: ', err);
+            res.status(500).send('Fehler beim Erstellen des Ordners.');
+        } else {
+            console.log('Ordner erfolgreich erstellt.', folderName);
+            res.send('Ordner erstellt.');
         }
     });
 });
