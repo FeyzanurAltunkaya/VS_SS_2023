@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { faUpload, faFolder } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 const FileUpload = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [folders, setFolders] = useState([]);
     const [activeFolder, setActiveFolder] = useState('');
+    const [newFolderName, setNewFolderName] = useState('');
 
     const fetchUploadedFiles = () => {
         fetch('http://localhost:8000/files')
@@ -128,6 +128,29 @@ const FileUpload = () => {
     const handleFolderClick = (folder) => {
         setActiveFolder(folder);
     };
+    const handleNewFolderNameChange = (event) => {
+        setNewFolderName(event.target.value);
+    };
+    const handleNewFolderSubmit = () => {
+        if (newFolderName) {
+            fetch('http://localhost:8000/create-folder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ folderName: newFolderName }),
+            })
+                .then((response) => response.text())
+                .then((data) => {
+                    console.log(data); // Serverantwort
+                    fetchFolders();
+                    setNewFolderName('');
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    };
 
     return (
         <div>
@@ -156,12 +179,12 @@ const FileUpload = () => {
             </div>
 
             <div className="your-folders">
-                <h2>Ordner:</h2>
+                <h2> Ordner: </h2>
                 <ul className="folder-list">
                     {folders.map((folder) => (
                         <li
                             key={folder}
-                            className={`folder-item ${
+                            className={` folder-item ${
                                 activeFolder === folder ? 'active' : ''
                             }`}
                             onClick={() => handleFolderClick(folder)}
@@ -174,7 +197,7 @@ const FileUpload = () => {
                     ))}
                 </ul>
                 <div className="create-folder">
-                    <input type="text" placeholder="Ordnername" />
+                    <input type="text" placeholder="Ordnername" value={newFolderName} onChange={handleNewFolderNameChange}/>
                     <button onClick={handleCreateFolder}>Ordner erstellen</button>
                 </div>
             </div>
