@@ -3,22 +3,29 @@ package com.example.projectFiler.entity;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import lombok.*;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.stereotype.Repository;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@EnableAutoConfiguration
+@Repository
 public class GroupEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String name;
 
   @ManyToMany(mappedBy = "groups")
   private Set<UserEntity> users = new HashSet<>();
+
+  public String getName() {
+    return name;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
 }
