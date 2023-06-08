@@ -1,34 +1,30 @@
 package com.example.projectFiler.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-
 import java.util.HashSet;
 import java.util.Set;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@EnableAutoConfiguration
 public class FileEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String filename;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
 
-    @ManyToOne
-    private UserEntity users ;
+  private String filename;
 
+  @ManyToOne
+  private UserEntity users;
 
-    public void setMimeType(String contentType) {
-    }
+  public void setMimeType(String contentType) {}
 
-    public void setData(byte[] bytes) {
-    }
+  public void setData(byte[] bytes) {}
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public void setFilename(String originalFilename) {
+    this.filename = filename;
+  }
 }
