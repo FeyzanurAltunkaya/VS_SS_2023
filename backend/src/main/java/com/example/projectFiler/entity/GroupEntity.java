@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class GroupEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
   private String name;
