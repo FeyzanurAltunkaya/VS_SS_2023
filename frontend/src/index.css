@@ -170,6 +170,7 @@ h2 {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  flex-direction: column;
 
 
 }
@@ -198,10 +199,33 @@ h2 {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 .folder-item button:hover {
   background-color: #999999;
 }
 
 .folder-item button:hover {
   background-color: #999999;
+}
+
+.icons .folder-icon{
+  color: dodgerblue;
+  font-size: 50px;
+}
+.folder-name{
+  color: black;
+  font-size:30px;
+
+
+}
+.trash-icon{
+  color: grey;
+  font-size: 20px;
+  margin:10px;
+}
+
+.share-icon{
+  color: grey;
+  font-size: 20px;
+  margin: 10px;
 }

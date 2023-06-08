@@ -83,6 +83,21 @@ app.post('/create-folder', (req, res) => {
         }
     });
 });
+app.delete('/uploads/:folderName', (req, res) => {
+    const folderName = req.params.folderName;
+    const folderPath = 'uploads/' + folderName;
+
+    fs.rmdir(folderPath, { recursive: true }, (err) => {
+        if (err) {
+            console.error('Fehler beim Löschen des Ordners: ', err);
+            res.status(500).send('Fehler beim Löschen des Ordners.');
+        } else {
+            console.log('Ordner erfolgreich gelöscht:', folderName);
+            res.send('Ordner gelöscht.');
+        }
+    });
+});
+
 
 app.listen(8000, () => {
     console.log('Server läuft auf Port 8000');

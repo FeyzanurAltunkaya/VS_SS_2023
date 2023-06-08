@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faUpload, faFolder } from "@fortawesome/free-solid-svg-icons";
+import { faUpload, faFolder,faShare ,faTrash} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const FileUpload = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -150,7 +150,20 @@ const FileUpload = () => {
                     console.error(error);
                 });
         }
+    };const handleDeleteFolder = (folderName) => {
+        fetch(`http://localhost:8000/uploads/${folderName}`, {
+            method: 'DELETE',
+        })
+            .then((response) => response.text())
+            .then((data) => {
+                console.log(data); // Serverantwort
+                fetchFolders();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     };
+
 
     return (
         <div>
@@ -184,15 +197,19 @@ const FileUpload = () => {
                     {folders.map((folder) => (
                         <li
                             key={folder}
-                            className={` folder-item ${
-                                activeFolder === folder ? 'active' : ''
-                            }`}
+                            className={`folder-item ${activeFolder === folder ? 'active' : ''}`
+
+                            }
                             onClick={() => handleFolderClick(folder)}
                             onDragOver={handleDragOver}
                             onDrop={(event) => handleDrop(event, folder)}
                         >
-                            <FontAwesomeIcon icon={faFolder} />
-                            {folder}
+                            <div className="icons">
+                            <FontAwesomeIcon icon={faFolder} className="folder-icon" />
+                            <FontAwesomeIcon icon={faTrash} className="trash-icon" />
+                            <FontAwesomeIcon icon={faShare} className="share-icon" />
+                            </div>
+                            <div className="folder-name">{folder}</div>
                         </li>
                     ))}
                 </ul>
