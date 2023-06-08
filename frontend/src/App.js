@@ -63,9 +63,7 @@ class App extends Component {
 
                                 <div className="navbar-container">
 
-                                <Link to={"/"} className="nav-link">
-                                    FilesFilter
-                                </Link>
+
 
 
                                 <li className="nav-item">
@@ -82,7 +80,7 @@ class App extends Component {
                                 </li>
 
                                 <li className="nav-item">
-                                    <a href="/login" className="nav-link" onClick={this.logOut}>
+                                    <a href="/" className="nav-link" onClick={this.logOut}>
                                         LogOut
                                     </a>
                                 </li>
@@ -98,9 +96,9 @@ class App extends Component {
 
                 <div className="container">
                     <Routes>
-                        <Route path="/" element={<Home />} />
+
                         <Route path="/FileUpload" element={<FileUpload />} />
-                        <Route path="/login" element={<Login />} />
+                        <Route path="/" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/profile" element={<Profile />} />
 
