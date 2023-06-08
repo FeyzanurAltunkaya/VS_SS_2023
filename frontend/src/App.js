@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
+import "./index.css"
 
 import AuthService from "./services/AuthService";
 
@@ -8,11 +9,11 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import BoardUser from "./pages/BoardUser";
-import BoardAdmin from  "./pages/BoardUser";
+
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./services/EventBus";
+import FileUpload from "./pages/FileUpload";
 
 class App extends Component {
     constructor(props) {
@@ -53,82 +54,61 @@ class App extends Component {
     }
 
     render() {
-        const { currentUser,  showAdminBoard } = this.state;
+        const { currentUser } = this.state;
 
         return (
-            <div>
-                <nav className="navbar">
-                    <Link to={"/"} className="navbar-container">
-                        FilesFilter
-                    </Link>
-                    <div className="navbar-nav">
-                        <li className="nav-item">
-                            <Link to={"/home"} className="nav-link">
-                                Home
-                            </Link>
-                        </li>
+            <>
+                        {currentUser ? (
+                            <header className="navbar">
 
-                        {showAdminBoard && (
-                            <li className="nav-item">
-                                <Link to={"/admin"} className="nav-link">
-                                    Admin Board
+                                <div className="navbar-container">
+
+                                <Link to={"/"} className="nav-link">
+                                    FilesFilter
                                 </Link>
-                            </li>
+
+
+                                <li className="nav-item">
+
+                                    <Link to={"/FileUpload"} >
+                                        MyFiles
+                                    </Link>
+                                </li>
+
+                                <li className="nav-item">
+                                    <Link to={"/profile"} className="username">
+                                        {currentUser.username}
+                                    </Link>
+                                </li>
+
+                                <li className="nav-item">
+                                    <a href="/login" className="nav-link" onClick={this.logOut}>
+                                        LogOut
+                                    </a>
+                                </li>
+                            </div>
+
+
+                            </header>
+                        ) : (
+                           <div className="LoginForm"/>
                         )}
 
-                        {currentUser && (
-                            <li className="nav-item">
-                                <Link to={"/user"} className="nav-link">
-                                    User
-                                </Link>
-                            </li>
-                        )}
-                    </div>
 
-                    {currentUser ? (
-                        <div className="navbar-nav">
-                            <li className="nav-item">
-                                <Link to={"/profile"} className="username">
-                                    {currentUser.username}
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <a href="/login" className="nav-link" onClick={this.logOut}>
-                                    LogOut
-                                </a>
-                            </li>
-                        </div>
-                    ) : (
-                        <div className="navbar-nav">
-                            <li className="nav-item">
-                                <Link to={"/login"} className="nav-link">
-                                    Login
-                                </Link>
-                            </li>
-
-                            <li className="nav-item">
-                                <Link to={"/register"} className="nav-link">
-                                    Sign Up
-                                </Link>
-                            </li>
-                        </div>
-                    )}
-                </nav>
 
                 <div className="container">
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/home" element={<Home />} />
+                        <Route path="/FileUpload" element={<FileUpload />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/profile" element={<Profile />} />
-                        <Route path="/user" element={<BoardUser />} />
-                        <Route path="/admin" element={<BoardAdmin />} />
+
                     </Routes>
                 </div>
 
                 {/* <AuthVerify logOut={this.logOut}/> */}
-            </div>
+            </>
         );
     }
 }
