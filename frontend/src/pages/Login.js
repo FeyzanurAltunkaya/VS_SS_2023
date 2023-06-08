@@ -10,7 +10,7 @@ import {withRouter} from "../services/withRouter";
 const required = value => {
     if (!value) {
         return (
-            <div className="alert alert-danger" role="alert">
+            <div className="alertDanger" role="alert">
                 This field is required!
             </div>
         );
@@ -57,7 +57,7 @@ class Login extends Component {
         if (this.checkBtn.context._errors.length === 0) {
             AuthService.login(this.state.username, this.state.password).then(
                 () => {
-                    this.props.router.navigate("/profile");
+                    this.props.router.navigate("/FileUpload");
                     window.location.reload();
                 },
                 error => {
@@ -85,7 +85,7 @@ class Login extends Component {
         return (
 
                     <Form
-                        className="form"
+
                         onSubmit={this.handleLogin}
                         ref={c => {
                             this.form = c;
@@ -95,7 +95,6 @@ class Login extends Component {
                             <label htmlFor="username">Benutzername:</label>
                             <Input
                                 type="text"
-                                className="form-control"
                                 name="username"
                                 id="username"
                                 value={this.state.username}
@@ -108,7 +107,6 @@ class Login extends Component {
                             <label htmlFor="password">Passwort:</label>
                             <Input
                                 type="password"
-                                className="form-control"
                                 name="password"
                                 id="password"
                                 value={this.state.password}
@@ -119,11 +117,10 @@ class Login extends Component {
 
                         <div>
                             <button
-                                className="btn btn-primary btn-block"
                                 disabled={this.state.loading}
                             >
                                 {this.state.loading && (
-                                    <span className="spinner-border spinner-border-sm"></span>
+                                    <span className="loginSpan"></span>
                                 )}
                                 <span>Anmelden</span>
                             </button>

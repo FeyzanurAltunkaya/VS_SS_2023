@@ -9,7 +9,7 @@ const FileUpload = () => {
     const [newFolderName, setNewFolderName] = useState('');
 
     const fetchUploadedFiles = () => {
-        fetch('http://localhost:8000/files')
+        fetch('http://localhost:8000/api/test/files')
             .then((response) => response.json())
             .then((data) => {
                 setUploadedFiles(data.files);
