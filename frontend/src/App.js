@@ -59,18 +59,32 @@ class App extends Component {
 
         return (
             <>
+
+                <nav className="navbar navbar-expand navbar-dark bg-dark">
+                    <Link to={"/"} className="navbar-brand">
+                        MyFilesFilter
+                    </Link>
+                    <div className="navbar-nav mr-auto">
+
+                        <li className="nav-item">
+                            <a href="/login" className="nav-link" onClick={this.logOut}>
+                                LogIn
+                            </a>
+                        </li>
+                    </div>>
+                </nav>
                 {(currentUser ) ? (
                     <header className="navbar">
 
                         <div className="navbar-container">
                             <li className="nav-item">
                                 <Link to={"/directories"} className="nav-link" className="files">
-                                    MyFilesFilter
+                                    MyDirectories
                                 </Link>
                             </li>
 
                             <li className="nav-item">
-                                <Link to={"/"} className="nav-link" className="myHome">
+                                <Link to={"/home"} className="nav-link" className="myHome">
                                     Home
                                 </Link>
                             </li>
@@ -101,7 +115,8 @@ class App extends Component {
                 <div className="container">
                     <Routes>
 
-                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<Home/>}/>
+
                         <Route path="/directories" element={<Directories/>}/>
                         <Route path="/FileUpload" element={<FileUpload/>}/>
                         <Route path="/login" element={<Login />} />
