@@ -15,6 +15,7 @@ import Directories from "./pages/Directories";
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./services/EventBus";
 import FileUpload from "./pages/FileUpload";
+import AddDirectory from "./pages/AddDirectory";
 
 class App extends Component {
     constructor(props) {
@@ -119,6 +120,7 @@ class App extends Component {
 
                         <Route path="/" element={<Home/>}/>
                         <Route path="/home" element={<Home/>}/>
+                        <Route path="/add-directory" element={<AddDirectory/>}/>
                         <Route path="/directories" element={<Directories/>}/>
                         <Route path="/FileUpload" element={<FileUpload/>}/>
                         <Route path="/login" element={<Login />} />

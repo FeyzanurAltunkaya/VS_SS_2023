@@ -28,8 +28,9 @@ public class testController {
   public String adminAccess() {
     return "Admin Board.";
   }
+
   @RequestMapping("/")
   public String home() {
-  return "Dockerizing Spring Boot Application";
+    return "Dockerizing Spring Boot Application";
   }
 }
