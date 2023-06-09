@@ -60,12 +60,17 @@ class App extends Component {
         return (
             <>
 
-                <nav className="navbar navbar-expand navbar-dark bg-dark">
+                <nav className="navbar">
                     <Link to={"/"} className="navbar-brand">
                         MyFilesFilter
                     </Link>
-                    <div className="navbar-nav mr-auto">
+                    <div className="navbar-container">
 
+                        <li className="nav-item">
+                            <a href="/home" className="nav-link" >
+                                Home
+                            </a>
+                        </li>
                         <li className="nav-item">
                             <a href="/login" className="nav-link" onClick={this.logOut}>
                                 LogIn
@@ -74,7 +79,7 @@ class App extends Component {
                     </div>>
                 </nav>
                 {(currentUser ) ? (
-                    <header className="navbar">
+                    <nav className="navbar">
 
                         <div className="navbar-container">
                             <li className="nav-item">
@@ -83,12 +88,8 @@ class App extends Component {
                                 </Link>
                             </li>
 
-                            <li className="nav-item">
-                                <Link to={"/home"} className="nav-link" className="myHome">
-                                    Home
-                                </Link>
-                            </li>
 
+                            <div className="navbar-nav mr-auto">
                             <li className="nav-item">
                                 <Link to={"/profile"} className="username">
                                     {currentUser.username}
@@ -100,10 +101,11 @@ class App extends Component {
                                     LogOut
                                 </a>
                             </li>
-
+                            </div>
                         </div>
 
-                    </header>
+
+                    </nav>
 
                 ) : (
                     <div className="LoginForm"/>
@@ -116,7 +118,7 @@ class App extends Component {
                     <Routes>
 
                         <Route path="/" element={<Home/>}/>
-
+                        <Route path="/home" element={<Home/>}/>
                         <Route path="/directories" element={<Directories/>}/>
                         <Route path="/FileUpload" element={<FileUpload/>}/>
                         <Route path="/login" element={<Login />} />
