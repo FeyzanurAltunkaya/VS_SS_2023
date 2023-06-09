@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import Directories from "./pages/Directories";
 
 
 // import AuthVerify from "./common/auth-verify";
@@ -58,49 +59,70 @@ class App extends Component {
 
         return (
             <>
-                        {currentUser ? (
-                            <header className="navbar">
 
-                                <div className="navbar-container">
+                <nav className="navbar navbar-expand navbar-dark bg-dark">
+                    <Link to={"/"} className="navbar-brand">
+                        MyFilesFilter
+                    </Link>
+                    <div className="navbar-nav mr-auto">
 
+                        <li className="nav-item">
+                            <a href="/login" className="nav-link" onClick={this.logOut}>
+                                LogIn
+                            </a>
+                        </li>
+                    </div>>
+                </nav>
+                {(currentUser ) ? (
+                    <header className="navbar">
 
+                        <div className="navbar-container">
+                            <li className="nav-item">
+                                <Link to={"/directories"} className="nav-link" className="files">
+                                    MyDirectories
+                                </Link>
+                            </li>
 
+                            <li className="nav-item">
+                                <Link to={"/home"} className="nav-link" className="myHome">
+                                    Home
+                                </Link>
+                            </li>
 
-                                <li className="nav-item">
+                            <li className="nav-item">
+                                <Link to={"/profile"} className="username">
+                                    {currentUser.username}
+                                </Link>
+                            </li>
 
-                                    <Link to={"/FileUpload"} >
-                                        MyFiles
-                                    </Link>
-                                </li>
+                            <li className="nav-item">
+                                <a href="/login" className="nav-link" onClick={this.logOut}>
+                                    LogOut
+                                </a>
+                            </li>
 
-                                <li className="nav-item">
-                                    <Link to={"/profile"} className="username">
-                                        {currentUser.username}
-                                    </Link>
-                                </li>
+                        </div>
 
-                                <li className="nav-item">
-                                    <a href="/" className="nav-link" onClick={this.logOut}>
-                                        LogOut
-                                    </a>
-                                </li>
-                            </div>
+                    </header>
 
+                ) : (
+                    <div className="LoginForm"/>
+                )}
 
-                            </header>
-                        ) : (
-                           <div className="LoginForm"/>
-                        )}
 
 
 
                 <div className="container">
                     <Routes>
 
-                        <Route path="/FileUpload" element={<FileUpload />} />
-                        <Route path="/" element={<Login />} />
+                        <Route path="/" element={<Home/>}/>
+
+                        <Route path="/directories" element={<Directories/>}/>
+                        <Route path="/FileUpload" element={<FileUpload/>}/>
+                        <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/profile" element={<Profile />} />
+
 
                     </Routes>
                 </div>
