@@ -20,7 +20,7 @@ public class FileTestEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  private String name;
+  private String fileName;
 
   @Lob
   @Column(length = 10485760) // Adjust the length based on your database's maximum size limit for storing binary data
