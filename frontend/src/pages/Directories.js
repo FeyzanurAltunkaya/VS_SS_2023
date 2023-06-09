@@ -1,94 +1,160 @@
-import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
-const Directories = () => {
-    const [selectedFiles, setSelectedFiles] = useState([]);
-    const [uploadedFiles, setUploadedFiles] = useState([]);
+import React, { Component } from "react";
+import DirService from "../services/DirService";
+import { Link } from "react-router-dom";
 
-    const fetchUploadedFiles = () => {
-        fetch("http://localhost:8000/files")
-            .then((response) => response.json())
-            .then((data) => {
-                setUploadedFiles(data.files);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
 
-    useEffect(() => {
-        fetchUploadedFiles();
-    }, []);
+export default class Directories extends Component {
+    constructor(props) {
+        super(props);
+        this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
+        this.retrieveDirectories = this.retrieveDirectories.bind(this);
+        this.refreshList = this.refreshList.bind(this);
+        this.setActiveDirectory = this.setActiveDirectory.bind(this);
+        this.searchTitle = this.searchTitle.bind(this);
 
-    const handleFileChange = (event) => {
-        setSelectedFiles(Array.from(event.target.files));
-    };
 
-    const handleUpload = () => {
-        if (selectedFiles.length > 0) {
-            const formData = new FormData();
-            selectedFiles.forEach((file) => {
-                formData.append("files", file);
+        this.state = {
+            directories: [],
+            currentDirectory: null,
+            currentIndex: -1,
+            searchTitle: ""
+        };
+    }
 
-            });
+    componentDidMount() {
+        this.retrieveDirectories();
+    }
 
-            fetch("http://localhost:8000/upload", {
-                method: "POST",
-                body: formData,
-            })
-                .then((response) => response.text())
-                .then((data) => {
-                    console.log(data);
-                    fetchUploadedFiles();
-                })
-                .catch((error) => {
-                    console.error(error);
+    onChangeSearchTitle(e) {
+        const searchTitle = e.target.value;
+
+        this.setState({
+            searchTitle: searchTitle
+        });
+    }
+
+
+    retrieveDirectories() {
+        DirService.getAllDirectories()
+            .then(response => {
+                this.setState({
+                    tutorials: response.data
                 });
-        }
-    };
-    const handleDelete = (fileName) => {
-        fetch(`http://localhost:8000/delete/${fileName}`, {
-            method: "DELETE",
-        })
-            .then((response) => response.text())
-            .then((data) => {
-                console.log(data);
-                fetchUploadedFiles();
+                console.log(response.data);
             })
-            .catch((error) => {
-                console.error(error);
+            .catch(e => {
+                console.log(e);
             });
-    };
+    }
 
-    return (
-        <div>
-            <div className="your-directories">
-                <input
-                    type="file"
-                    onChange={handleFileChange}
-                    className="file-input-container"
-                    multiple
-                />
-                <button onClick={handleUpload} className="upload-button">
-                    <div className="upload-icon-container">
-                        <FontAwesomeIcon icon={faUpload} />
+    refreshList() {
+        this.retrieveDirectories();
+        this.setState({
+            currentDirectory: null,
+            currentIndex: -1
+        });
+    }
+
+    setActiveDirectory(tutorial, index) {
+        this.setState({
+            currentDirectory: tutorial,
+            currentIndex: index
+        });
+    }
+
+
+    searchTitle() {
+        this.setState({
+            currentDirectory: null,
+            currentIndex: -1
+        });
+
+        DirService.findByTitle(this.state.searchTitle)
+            .then(response => {
+                this.setState({
+                    tutorials: response.data
+                });
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
+
+
+    render() {
+        const { searchTitle, directories, currentDirectory, currentIndex } = this.state;
+
+        return (
+            <div className="list row">
+                <div className="col-md-8">
+                    <div className="input-group mb-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search by title"
+                            value={searchTitle}
+                            onChange={this.onChangeSearchTitle}
+                        />
+                        <div className="input-group-append">
+                            <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                onClick={this.searchTitle}
+                            >
+                                Search
+                            </button>
+
+                           <Link to={"/add-directory"}>
+                               Add
+                           </Link>
+                        </div>
                     </div>
-                </button>
+                </div>
+                <div className="col-md-6">
+                    <h4>Tutorials List</h4>
 
-                <h2>Hochgeladene Dateien:</h2>
-                <ul className="file-list">
-                    {uploadedFiles.map((file) => (
-                        <li key={file} className="file-item">
-                            {file}
-                            <button onClick={() => handleDelete(file)}>Löschen</button>
-                        </li>
-                    ))}
-                </ul>
+                    <ul className="list-group">
+                        {directories &&
+                            directories.map((directory, index) => (
+                                <li
+                                    className={
+                                        "list-group-item " +
+                                        (index === currentIndex ? "active" : "")
+                                    }
+                                    onClick={() => this.setActiveDirectory(directory, index)}
+                                    key={index}
+                                >
+                                    {directory.dirName}
+                                </li>
+                            ))}
+                    </ul>
+
+
+                </div>
+                <div className="col-md-6">
+                    {currentDirectory ? (
+                        <div>
+                            <h4>Directory</h4>
+                            <Link
+                                to={"directory/" + currentDirectory.id}
+                                className="badge badge-warning"
+                            >
+                                {currentDirectory.dirName}
+                            </Link>
+                        </div>
+
+
+                    ) : (
+                        <div>
+                            <br />
+                            <p>Please click on a Tutorial...</p>
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
-    );
-};
-
-export default Directories;
-
+        );
+    }
+}
