@@ -11,7 +11,7 @@ export default class AddDirectory extends Component {
         this.state = {
             id: null,
             dirName: "",
-            //users :"",
+            currentUser: { username: "" },
             submitted: false
         };
     }
@@ -24,8 +24,9 @@ export default class AddDirectory extends Component {
 
 
     saveDirectory() {
-        const data = {
+        var data = {
             dirName: this.state.dirName,
+            currentUser: this.state,
         };
 
         DirService.create(data)
@@ -33,7 +34,7 @@ export default class AddDirectory extends Component {
                 this.setState({
                     id: response.data.id,
                     dirName: response.data.dirName,
-
+                    currentUser: { username: response.data.username },
                     submitted: true
                 });
                 console.log(response.data);
@@ -47,7 +48,7 @@ export default class AddDirectory extends Component {
         this.setState({
             id: null,
             dirName: "",
-
+            currentUser: { username: "" },
             submitted: false
         });
     }

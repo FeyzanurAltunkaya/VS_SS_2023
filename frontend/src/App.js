@@ -16,6 +16,9 @@ import Directories from "./pages/Directories";
 import EventBus from "./services/EventBus";
 import FileUpload from "./pages/FileUpload";
 import AddDirectory from "./pages/AddDirectory";
+import UploadFiles from "./pages/UploadFiles";
+import UsersList from "./pages/UsersList";
+import GroupsList from "./pages/GroupsList";
 
 class App extends Component {
     constructor(props) {
@@ -88,11 +91,16 @@ class App extends Component {
                                     MyDirectories
                                 </Link>
                             </li>
-
-
-                            <div className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <Link to={"/profile"} className="username">
+                                <Link to={"/upload"} className="nav-link" className="files">
+                                    MyFiles
+                                </Link>
+                            </li>
+
+                        </div>
+                            <div className="navbar-container2">
+                            <li className="nav-item">
+                                <Link to={"/profile"} className="nav-link">
                                     {currentUser.username}
                                 </Link>
                             </li>
@@ -103,8 +111,6 @@ class App extends Component {
                                 </a>
                             </li>
                             </div>
-                        </div>
-
 
                     </nav>
 
@@ -120,9 +126,12 @@ class App extends Component {
 
                         <Route path="/" element={<Home/>}/>
                         <Route path="/home" element={<Home/>}/>
+                        <Route path="/users-list" element={<UsersList/>}/>
+                        <Route path="/groups-list" element={<GroupsList/>}/>
                         <Route path="/add-directory" element={<AddDirectory/>}/>
                         <Route path="/directories" element={<Directories/>}/>
                         <Route path="/FileUpload" element={<FileUpload/>}/>
+                        <Route path="/upload" element={<UploadFiles/>}/>
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/profile" element={<Profile />} />

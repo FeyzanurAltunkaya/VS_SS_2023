@@ -1,46 +1,39 @@
 
 import React, { Component } from "react";
-import DirService from "../services/DirService";
+import GroupService from "../services/GroupService";
 import { Link } from "react-router-dom";
 import "../index.css"
 
 
-export default class Directories extends Component {
+export default class GroupsList extends Component {
     constructor(props) {
         super(props);
-        this.onChangeSearchDirName = this.onChangeSearchDirName.bind(this);
-        this.retrieveDirectories = this.retrieveDirectories.bind(this);
+
+        this.retrieveGroups = this.retrieveGroups.bind(this);
         this.refreshList = this.refreshList.bind(this);
-        this.setActiveDirectory = this.setActiveDirectory.bind(this);
-        this.searchDirName = this.searchDirName.bind(this);
+        this.setActiveGroup = this.setActiveGroup.bind(this);
+        //this.searchUserName = this.searchUserName.bind(this);
 
 
         this.state = {
-            directories: [],
-            currentDirectory: null,
+            groups: [],
+            currentGroup: null,
             currentIndex: -1,
-            dirName: ""
+            //username: ""
         };
     }
 
     componentDidMount() {
-        this.retrieveDirectories();
-    }
-
-    onChangeSearchDirName(e) {
-        const dirName = e.target.value;
-
-        this.setState({
-            dirName: dirName
-        });
+        this.retrieveGroups();
     }
 
 
-    retrieveDirectories() {
-        DirService.getAllDirectories()
+
+    retrieveGroups() {
+        GroupService.getAllGroups()
             .then(response => {
                 this.setState({
-                    directories: response.data
+                    groups: response.data
                 });
                 console.log(response.data);
             })
@@ -50,43 +43,46 @@ export default class Directories extends Component {
     }
 
     refreshList() {
-        this.retrieveDirectories();
+        this.retrieveGroups();
         this.setState({
-            currentDirectory: null,
+            currentGroup: null,
             currentIndex: -1
         });
     }
 
-    setActiveDirectory(directory, index) {
+    setActiveGroup(group, index) {
         this.setState({
-            currentDirectory: directory,
+            currentGroup: group,
             currentIndex: index
         });
     }
 
-
-    searchDirName() {
-        this.setState({
-            currentDirectory: null,
-            currentIndex: -1
-        });
-
-        DirService.findByTitle(this.state.dirName)
-            .then(response => {
-                this.setState({
-                    directories: response.data
-                });
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
+    /*
+        searchUserName() {
+            this.setState({
+                currentUser: null,
+                currentIndex: -1
             });
-    }
+
+            UserListService.findByTitle(this.state.username)
+                .then(response => {
+                    this.setState({
+                        users: response.data
+                    });
+                    console.log(response.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
+
+     */
 
 
 
     render() {
-        const { dirName, directories, currentDirectory, currentIndex } = this.state;
+        const { //groupname,
+            groups, currentGroup, currentIndex } = this.state;
 
         return (
             <div className="list row">
@@ -118,20 +114,20 @@ export default class Directories extends Component {
                     */}
                 </div>
                 <div className="directories">
-                    <h4>Directories List</h4>
+                    <h4>Groups List</h4>
 
                     <ul className="directoriesList">
-                        {directories &&
-                            directories.map((directory, index) => (
+                        {groups &&
+                            groups.map((group, index) => (
                                 <li
                                     className={
                                         "list-group-item " +
                                         (index === currentIndex ? "active" : "")
                                     }
-                                    onClick={() => this.setActiveDirectory(directory, index)}
+                                    onClick={() => this.setActiveGroup(group, index)}
                                     key={index}
                                 >
-                                    {directory.dirName}
+                                    {group.groupname}
                                 </li>
                             ))}
                     </ul>
@@ -139,14 +135,14 @@ export default class Directories extends Component {
 
                 </div>
                 <div className="col-md-6">
-                    {currentDirectory ? (
+                    {currentGroup ? (
                         <div>
                             <h4>Directory</h4>
                             <Link
-                                to={"directory/" + currentDirectory.id}
+                                to={"directory/" + currentGroup.id}
                                 className="badge badge-warning"
                             >
-                                {currentDirectory.dirName}
+                                {currentGroup.username}
                             </Link>
                         </div>
 
@@ -154,7 +150,7 @@ export default class Directories extends Component {
                     ) : (
                         <div>
                             <br />
-                            <p>Please click on a Directory...</p>
+                            <p>Please click on a Group...</p>
                         </div>
                     )}
                 </div>

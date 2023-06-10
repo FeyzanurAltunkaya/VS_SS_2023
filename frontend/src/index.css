@@ -17,7 +17,7 @@ body {
   justify-content: space-between;
   position: relative;
   height: auto;
-  top: 80px;
+  top: 90px;
   min-height: 500px;
 }
 
@@ -71,14 +71,18 @@ button:hover {
   left: 0;
   width: 100%;
   background-color: #f2f2f2;
-  padding: 10px;
+  padding: 20px;
   z-index: 999; /* Optional: Damit die Navbar über anderen Inhalten angezeigt wird */
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
 }
 
+.navbar-container2{
+  margin-right: 3em;
+}
 
 .upload-icon-container {
   display: flex;
@@ -244,4 +248,21 @@ h2 {
   color: grey;
   font-size: 20px;
   margin: 10px;
+}
+
+.list-group-item.active{
+  color: #0056b3;
+  padding: 30px;
+}
+
+.directories{
+  width: 380px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  padding: 0.8em;
+}
+
+.directoriesList{
+
+  background-color: #f2f2f2;
 }
