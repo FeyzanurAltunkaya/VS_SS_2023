@@ -1,10 +1,10 @@
 package com.example.projectFiler.entity;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Repository;
+import lombok.Data;
 
 @Entity
-@Repository
+@Data
 public class DirectoryEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,16 +14,4 @@ public class DirectoryEntity {
 
   @ManyToOne
   private UserEntity users;
-
-  public void setDirname(String dirname) {
-    this.dirname = dirname;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public void setUsers(UserEntity users) {
-    this.users = users;
-  }
 }
