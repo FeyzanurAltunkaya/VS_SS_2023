@@ -1,43 +1,36 @@
 
 import React, { Component } from "react";
-import DirService from "../services/DirService";
+import UserListService from "../services/UserListService";
 import { Link } from "react-router-dom";
 import "../index.css"
 
 
-export default class Directories extends Component {
+export default class UsersList extends Component {
     constructor(props) {
         super(props);
-        this.onChangeSearchDirName = this.onChangeSearchDirName.bind(this);
-        this.retrieveDirectories = this.retrieveDirectories.bind(this);
+
+        this.retrieveUsers = this.retrieveUsers.bind(this);
         this.refreshList = this.refreshList.bind(this);
-        this.setActiveDirectory = this.setActiveDirectory.bind(this);
-        this.searchDirName = this.searchDirName.bind(this);
+        this.setActiveUser = this.setActiveUser.bind(this);
+        //this.searchUserName = this.searchUserName.bind(this);
 
 
         this.state = {
-            directories: [],
-            currentDirectory: null,
+            users: [],
+            currentUser: null,
             currentIndex: -1,
-            dirName: ""
+            //username: ""
         };
     }
 
     componentDidMount() {
-        this.retrieveDirectories();
-    }
-
-    onChangeSearchDirName(e) {
-        const dirName = e.target.value;
-
-        this.setState({
-            dirName: dirName
-        });
+        this.retrieveUsers();
     }
 
 
-    retrieveDirectories() {
-        DirService.getAllDirectories()
+
+    retrieveUsers() {
+        UserListService.getAllUsers()
             .then(response => {
                 this.setState({
                     directories: response.data
@@ -50,31 +43,31 @@ export default class Directories extends Component {
     }
 
     refreshList() {
-        this.retrieveDirectories();
+        this.retrieveUsers();
         this.setState({
-            currentDirectory: null,
+            currentUser: null,
             currentIndex: -1
         });
     }
 
-    setActiveDirectory(directory, index) {
+    setActiveUser(user, index) {
         this.setState({
-            currentDirectory: directory,
+            currentUser: user,
             currentIndex: index
         });
     }
 
-
-    searchDirName() {
+/*
+    searchUserName() {
         this.setState({
-            currentDirectory: null,
+            currentUser: null,
             currentIndex: -1
         });
 
-        DirService.findByTitle(this.state.dirName)
+        UserListService.findByTitle(this.state.username)
             .then(response => {
                 this.setState({
-                    directories: response.data
+                    users: response.data
                 });
                 console.log(response.data);
             })
@@ -83,10 +76,13 @@ export default class Directories extends Component {
             });
     }
 
+ */
+
 
 
     render() {
-        const { dirName, directories, currentDirectory, currentIndex } = this.state;
+        const { //username,
+              users, currentUser, currentIndex } = this.state;
 
         return (
             <div className="list row">
@@ -118,20 +114,20 @@ export default class Directories extends Component {
                     */}
                 </div>
                 <div className="directories">
-                    <h4>Directories List</h4>
+                    <h4>Users List</h4>
 
                     <ul className="directoriesList">
-                        {directories &&
-                            directories.map((directory, index) => (
+                        {users &&
+                            users.map((user, index) => (
                                 <li
                                     className={
                                         "list-group-item " +
                                         (index === currentIndex ? "active" : "")
                                     }
-                                    onClick={() => this.setActiveDirectory(directory, index)}
+                                    onClick={() => this.setActiveUser(user, index)}
                                     key={index}
                                 >
-                                    {directory.dirName}
+                                    {user.username}
                                 </li>
                             ))}
                     </ul>
@@ -139,14 +135,14 @@ export default class Directories extends Component {
 
                 </div>
                 <div className="col-md-6">
-                    {currentDirectory ? (
+                    {currentUser ? (
                         <div>
                             <h4>Directory</h4>
                             <Link
-                                to={"directory/" + currentDirectory.id}
+                                to={"directory/" + currentUser.id}
                                 className="badge badge-warning"
                             >
-                                {currentDirectory.dirName}
+                                {currentUser.username}
                             </Link>
                         </div>
 
@@ -154,7 +150,7 @@ export default class Directories extends Component {
                     ) : (
                         <div>
                             <br />
-                            <p>Please click on a Directory...</p>
+                            <p>Please click on a User...</p>
                         </div>
                     )}
                 </div>
