@@ -11,20 +11,20 @@ export default class AddDirectory extends Component {
         this.state = {
             id: null,
             dirName: "",
-
+            //users :"",
             submitted: false
         };
     }
 
     onChangeDirName(e) {
         this.setState({
-            title: e.target.value
+            dirName: e.target.value
         });
     }
 
 
     saveDirectory() {
-        var data = {
+        const data = {
             dirName: this.state.dirName,
         };
 
@@ -32,7 +32,7 @@ export default class AddDirectory extends Component {
             .then(response => {
                 this.setState({
                     id: response.data.id,
-                    dirName: response.dirName.title,
+                    dirName: response.data.dirName,
 
                     submitted: true
                 });

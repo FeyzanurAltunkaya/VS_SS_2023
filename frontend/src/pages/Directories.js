@@ -39,7 +39,7 @@ export default class Directories extends Component {
         DirService.getAllDirectories()
             .then(response => {
                 this.setState({
-                    tutorials: response.data
+                    directories: response.data
                 });
                 console.log(response.data);
             })
@@ -56,9 +56,9 @@ export default class Directories extends Component {
         });
     }
 
-    setActiveDirectory(tutorial, index) {
+    setActiveDirectory(directory, index) {
         this.setState({
-            currentDirectory: tutorial,
+            currentDirectory: directory,
             currentIndex: index
         });
     }
@@ -73,7 +73,7 @@ export default class Directories extends Component {
         DirService.findByTitle(this.state.searchTitle)
             .then(response => {
                 this.setState({
-                    tutorials: response.data
+                    directories: response.data
                 });
                 console.log(response.data);
             })
