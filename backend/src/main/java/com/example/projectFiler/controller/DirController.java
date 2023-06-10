@@ -2,6 +2,7 @@ package com.example.projectFiler.controller;
 
 import com.example.projectFiler.entity.DirectoryEntity;
 import com.example.projectFiler.entity.GroupEntity;
+import com.example.projectFiler.entity.UserEntity;
 import com.example.projectFiler.repository.DirectoryRepository;
 import com.example.projectFiler.repository.UserRepository;
 import java.util.List;
@@ -36,10 +37,14 @@ public class DirController {
     return ResponseEntity.status(HttpStatus.CREATED).body(createdDirectory);
   }
 
-  @GetMapping
+  /**@GetMapping
   public ResponseEntity<List<DirectoryEntity>> getAllDirectories() {
     List<DirectoryEntity> directories = directoryRepository.findAll();
-    return ResponseEntity.ok(directories);
+   return ResponseEntity.ok(directories);
+  }*/
+  @GetMapping
+  public List<DirectoryEntity> getAllDirectories() {
+    return directoryRepository.findAll();
   }
 
   @GetMapping("/{id}")
