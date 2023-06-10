@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+//@CrossOrigin(origins = "*")
 @RequestMapping("/usergroup")
 public class UserGroupJoinController {
   private final UserGroupJoinRepository userGroupJoinRepository;
