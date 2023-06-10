@@ -1,22 +1,23 @@
 import http from "../http-commen";
 
-class UploadFilesService {
-    upload(file, onUploadProgress) {
-        let formData = new FormData();
+const upload = (file, onUploadProgress) => {
+    let formData = new FormData();
 
-        formData.append("file", file);
+    formData.append("file", file);
 
-        return http.post("/upload", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress,
-        });
-    }
+    return http.post("/upload", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress,
+    });
+};
 
-    getFiles() {
-        return http.get("/files");
-    }
-}
+const getFiles = () => {
+    return http.get("/files");
+};
 
-export default new UploadFilesService();
+export default {
+    upload,
+    getFiles,
+};

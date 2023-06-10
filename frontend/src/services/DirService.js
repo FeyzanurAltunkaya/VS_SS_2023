@@ -1,31 +1,41 @@
 import http from "../http-commen"
 
+const getAll = () => {
+    return http.get("/directory");
+};
 
+const get = id => {
+    return http.get(`/directory/${id}`);
+};
 
-class DirService {
-    getAllDirectories() {
-        return http.get( 'directory');
-    }
+const create = data => {
+    return http.post("/directory", data);
+};
 
-    get(id) {
-        return http.get(`directory/${id}`);
-    }
+const update = (id, data) => {
+    return http.put(`/directory/${id}`, data);
+};
 
-    create() {
-        return http.post('directory');
-    }
+const remove = id => {
+    return http.delete(`/directory/${id}`);
+};
 
-    update(id , data){
-        return http.put(`directory/${id}`, data);
-    }
+const removeAll = () => {
+    return http.delete(`/directory`);
+};
 
-    delete(id) {
-        return http.delete(`directory/${id}`);
-    }
+const findByTitle = title => {
+    return http.get(`/directory?dirName=${title}`);
+};
 
-    findByTitle(dirName) {
-        return http.get(`directory?title=${dirName}`);
-    }
-}
+const DirService = {
+    getAll,
+    get,
+    create,
+    update,
+    remove,
+    removeAll,
+    findByTitle
+};
 
-export default new DirService();
+export default DirService;

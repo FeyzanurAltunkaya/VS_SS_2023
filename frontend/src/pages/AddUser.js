@@ -1,34 +1,35 @@
 import React, { useState } from "react";
-import DirService from "../services/DirService";
+import UserListService from "../services/UserListService";
+import UserService from "../services/UserService";
 
 
-const AddDirectory = () => {
-    const initialDirectoryState = {
+const AddUser = () => {
+    const initialUserState = {
         id: null,
-        directoryName: "",
-
+        username: "",
+        password: "",
     };
-    const [directory, setDirectory] = useState(initialDirectoryState);
+    const [user, setUser] = useState(initialUserState);
     const [submitted, setSubmitted] = useState(false);
 
     const handleInputChange = event => {
         const { name, value } = event.target;
-        setDirectory({ ...directory, [name]: value });
+        setUser({ ...user, [name]: value });
     };
 
     const saveTutorial = () => {
         const data = {
-            directoryName: directory.directoryName,
-
+            username: user.username,
+            password: user.password
 
         };
 
-        DirService.create(data)
+        UserListService.create(data)
             .then(response => {
-                setDirectory({
+                setUser({
                     id: response.data.id,
-                    directoryName: response.data.directoryName,
-
+                    username: response.data.username,
+                    password: response.data.password
                 });
                 setSubmitted(true);
                 console.log(response.data);
@@ -39,7 +40,7 @@ const AddDirectory = () => {
     };
 
     const newTutorial = () => {
-        setDirectory(initialDirectoryState);
+        setUser(initialUserState);
         setSubmitted(false);
     };
 
@@ -55,14 +56,23 @@ const AddDirectory = () => {
             ) : (
                 <div>
                     <div className="form-group">
-                        <label htmlFor="title">Title</label>
+                        <label htmlFor="title">Username</label>
                         <input
                             type="text"
                             className="form-control"
                             id="title"
-                            value={directory.directoryName}
+                            value={user.username}
                             onChange={handleInputChange}
                             //name="title"
+                        />
+                        <label htmlFor="title">Password</label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="password"
+                            name="password"
+                            value={user.password}
+                            onChange={handleInputChange}
                         />
                     </div>
 
@@ -76,4 +86,4 @@ const AddDirectory = () => {
     );
 };
 
-export default AddDirectory;
+export default AddUser;

@@ -10,8 +10,8 @@ public class DirectoryEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  private String dirname;
+  private String directoryName;
 
   @ManyToOne
-  private UserEntity users;
+  private UserEntity user;
 }

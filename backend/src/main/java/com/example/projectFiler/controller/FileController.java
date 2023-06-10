@@ -1,4 +1,3 @@
-
 package com.example.projectFiler.controller;
 
 import com.example.projectFiler.entity.FileEntity;
@@ -21,7 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 //@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/files")
 public class FileController {
   @Autowired
   private FileStorageService storageService;
