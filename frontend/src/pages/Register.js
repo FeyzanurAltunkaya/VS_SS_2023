@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import { isEmail } from "validator";
+
 
 import AuthService from "../services/AuthService";
 
@@ -16,15 +16,6 @@ const required = value => {
     }
 };
 
-const email = value => {
-    if (!isEmail(value)) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                This is not a valid email.
-            </div>
-        );
-    }
-};
 
 const vusername = value => {
     if (value.length < 3 || value.length > 20) {
@@ -87,7 +78,6 @@ export default class Register extends Component {
         if (this.checkBtn.context._errors.length === 0) {
             AuthService.register(
                 this.state.username,
-                this.state.email,
                 this.state.password
             ).then(
                 response => {
@@ -95,6 +85,8 @@ export default class Register extends Component {
                         message: response.data.message,
                         successful: true
                     });
+                    this.props.router.navigate("/users-list");
+                    window.location.reload();
                 },
                 error => {
                     const resMessage =
@@ -117,11 +109,7 @@ export default class Register extends Component {
         return (
             <div className="col-md-12">
                 <div className="card card-container">
-                    <img
-                        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                        alt="profile-img"
-                        className="profile-img-card"
-                    />
+
 
                     <Form
                         onSubmit={this.handleRegister}
@@ -158,7 +146,7 @@ export default class Register extends Component {
                                 </div>
 
                                 <div className="form-group">
-                                    <button className="btn btn-primary btn-block">Sign Up</button>
+                                    <button className="btn btn-primary btn-block">Register</button>
                                 </div>
                             </div>
                         )}

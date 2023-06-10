@@ -17,12 +17,12 @@ public class UserEntity {
   private Long id;
 
   //@Column(name = "first_name", nullable = false)
-  @NotBlank
+
   @Size(max = 20)
   private String firstName;
 
   //@Column(name = "last_name", nullable = false)
-  @NotBlank
+
   @Size(max = 40)
   private String lastName;
 

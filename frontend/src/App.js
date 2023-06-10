@@ -9,16 +9,19 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import Directories from "./pages/Directories";
+//import Directories from "./pages/Directories";
 
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./services/EventBus";
-import FileUpload from "./pages/FileUpload";
 import AddDirectory from "./pages/AddDirectory";
 import UploadFiles from "./pages/UploadFiles";
 import UsersList from "./pages/UsersList";
 import GroupsList from "./pages/GroupsList";
+import TestDirectoriesHooks from "./pages/TestDirectoriesHooks";
+import OneDirectory from "./pages/OneDirectory";
+import OneUser from "./pages/OneUser";
+import AddUser from "./pages/AddUser";
 
 class App extends Component {
     constructor(props) {
@@ -68,48 +71,46 @@ class App extends Component {
                     <Link to={"/"} className="navbar-brand">
                         MyFilesFilter
                     </Link>
-                    <div className="navbar-container">
+                    <div className="navbar-container2">
 
-                        <li className="nav-item">
+
                             <a href="/home" className="nav-link" >
                                 Home
                             </a>
-                        </li>
-                        <li className="nav-item">
+
                             <a href="/login" className="nav-link" onClick={this.logOut}>
                                 LogIn
                             </a>
-                        </li>
-                    </div>>
+
+                    </div>
                 </nav>
                 {(currentUser ) ? (
                     <nav className="navbar">
 
                         <div className="navbar-container">
-                            <li className="nav-item">
-                                <Link to={"/directories"} className="nav-link" className="files">
+                            <div>
+                                <Link to={"/directories"} className="nav-link" >
                                     MyDirectories
                                 </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to={"/upload"} className="nav-link" className="files">
-                                    MyFiles
-                                </Link>
-                            </li>
+                            </div>
+
+                            <div>
+                            <a href="/upload" className="nav-link" >
+                                MyFiles
+                            </a>
+                            </div>
 
                         </div>
                             <div className="navbar-container2">
-                            <li className="nav-item">
+
                                 <Link to={"/profile"} className="nav-link">
                                     {currentUser.username}
                                 </Link>
-                            </li>
 
-                            <li className="nav-item">
                                 <a href="/login" className="nav-link" onClick={this.logOut}>
                                     LogOut
                                 </a>
-                            </li>
+
                             </div>
 
                     </nav>
@@ -126,11 +127,13 @@ class App extends Component {
 
                         <Route path="/" element={<Home/>}/>
                         <Route path="/home" element={<Home/>}/>
+                        <Route path="/users/:id" element={<OneUser/>}/>
+                        <Route path="/add-user" element={<Register/>}/>
                         <Route path="/users-list" element={<UsersList/>}/>
                         <Route path="/groups-list" element={<GroupsList/>}/>
                         <Route path="/add-directory" element={<AddDirectory/>}/>
-                        <Route path="/directories" element={<Directories/>}/>
-                        <Route path="/FileUpload" element={<FileUpload/>}/>
+                        <Route path="/directories" element={<TestDirectoriesHooks/>}/>
+                        <Route path="/directories/:id" element={<OneDirectory/>}/>
                         <Route path="/upload" element={<UploadFiles/>}/>
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />

@@ -70,7 +70,7 @@ button:hover {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #f2f2f2;
+  background-color: cornflowerblue;
   padding: 20px;
   z-index: 999; /* Optional: Damit die Navbar über anderen Inhalten angezeigt wird */
   display: flex;
@@ -79,9 +79,27 @@ button:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
 }
+.navbar-container{
+  display: flex;
+  width: 150px;
+  padding: 10px;
+  justify-content: space-between;
+}
 
 .navbar-container2{
   margin-right: 3em;
+}
+
+
+.nav-link{
+  margin-left: 20px;
+  color: white;
+}
+
+.buttonsList{
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
 }
 
 .upload-icon-container {
@@ -243,16 +261,27 @@ h2 {
   font-size: 20px;
   margin:10px;
 }
+.edit-icon{
+  color: grey;
+  font-size: 20px;
+  margin-left: 1em;
+}
 
 .share-icon{
   color: grey;
   font-size: 20px;
-  margin: 10px;
+
 }
 
 .list-group-item.active{
-  color: #0056b3;
   padding: 30px;
+  color: #282c34;
+}
+
+.list-group-item {
+  color: #0056b3;
+  display: flex;
+  padding: 10px;
 }
 
 .directories{
