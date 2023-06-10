@@ -28,4 +28,7 @@ public class GroupEntity {
   public void setId(Long id) {
     this.id = id;
   }
+
+  public String setName(String testGroup) { return name;}
+
 }
