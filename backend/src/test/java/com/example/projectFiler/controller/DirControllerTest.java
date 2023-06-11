@@ -34,10 +34,10 @@ class DirControllerTest {
     MockitoAnnotations.openMocks(this);
   }
 
-  @Test
-  void testCreateDirectory() {
-    DirectoryEntity directory = new DirectoryEntity();
-    directory.setDirname("Test Directory");
+    @Test
+    void testCreateDirectory() {
+        DirectoryEntity directory = new DirectoryEntity();
+        directory.setDirectoryName("Test Directory");
 
     when(directoryRepository.save(directory)).thenReturn(directory);
 
@@ -66,12 +66,12 @@ class DirControllerTest {
     verify(directoryRepository, times(1)).findAll();
   }
 
-  @Test
-  void testGetDirectoryById_ExistingId() {
-    Long id = 1L;
-    DirectoryEntity directory = new DirectoryEntity();
-    directory.setId(id);
-    directory.setDirname("Test Directory");
+    @Test
+    void testGetDirectoryById_ExistingId() {
+        Long id = 1L;
+        DirectoryEntity directory = new DirectoryEntity();
+        directory.setId(id);
+        directory.setDirectoryName("Test Directory");
 
     when(directoryRepository.findById(id)).thenReturn(Optional.of(directory));
 
@@ -96,16 +96,16 @@ class DirControllerTest {
     verify(directoryRepository, times(1)).findById(id);
   }
 
-  @Test
-  void testUpdateDirectory_ExistingId() {
-    Long id = 1L;
-    DirectoryEntity existingDirectory = new DirectoryEntity();
-    existingDirectory.setId(id);
-    existingDirectory.setDirname("Existing Directory");
+    @Test
+    void testUpdateDirectory_ExistingId() {
+        Long id = 1L;
+        DirectoryEntity existingDirectory = new DirectoryEntity();
+        existingDirectory.setId(id);
+        existingDirectory.setDirectoryName("Existing Directory");
 
-    DirectoryEntity updatedDirectory = new DirectoryEntity();
-    updatedDirectory.setId(id);
-    updatedDirectory.setDirname("Updated Directory");
+        DirectoryEntity updatedDirectory = new DirectoryEntity();
+        updatedDirectory.setId(id);
+        updatedDirectory.setDirectoryName("Updated Directory");
 
     when(directoryRepository.findById(id)).thenReturn(Optional.of(existingDirectory));
     when(directoryRepository.save(updatedDirectory)).thenReturn(updatedDirectory);
@@ -122,12 +122,12 @@ class DirControllerTest {
     verify(directoryRepository, times(1)).save(updatedDirectory);
   }
 
-  @Test
-  void testUpdateDirectory_NonExistingId() {
-    Long id = 1L;
-    DirectoryEntity directory = new DirectoryEntity();
-    directory.setId(id);
-    directory.setDirname("Test Directory");
+    @Test
+    void testUpdateDirectory_NonExistingId() {
+        Long id = 1L;
+        DirectoryEntity directory = new DirectoryEntity();
+        directory.setId(id);
+        directory.setDirectoryName("Test Directory");
 
     when(directoryRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -142,12 +142,12 @@ class DirControllerTest {
     verify(directoryRepository, times(0)).save(directory);
   }
 
-  @Test
-  void testDeleteDirectory_ExistingId() {
-    Long id = 1L;
-    DirectoryEntity directory = new DirectoryEntity();
-    directory.setId(id);
-    directory.setDirname("Test Directory");
+    @Test
+    void testDeleteDirectory_ExistingId() {
+        Long id = 1L;
+        DirectoryEntity directory = new DirectoryEntity();
+        directory.setId(id);
+        directory.setDirectoryName("Test Directory");
 
     when(directoryRepository.findById(id)).thenReturn(Optional.of(directory));
 
