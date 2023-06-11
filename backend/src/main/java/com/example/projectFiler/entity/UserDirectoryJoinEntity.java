@@ -24,4 +24,13 @@ public class UserDirectoryJoinEntity {
   public void setDirectory(DirectoryEntity directory) {
     this.directory = directory;
   }
+
+  public UserEntity getUser() {
+    return user;
+  }
+  public DirectoryEntity getDirectory() {
+    return directory;
+  }
+
+
 }
