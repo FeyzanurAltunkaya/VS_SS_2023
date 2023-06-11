@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import AddGroup from "./pages/AddGroup"
 //import Directories from "./pages/Directories";
 
 
@@ -139,6 +140,8 @@ class App extends Component {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/add-group" element={<AddGroup />} />
+
 
 
                     </Routes>
