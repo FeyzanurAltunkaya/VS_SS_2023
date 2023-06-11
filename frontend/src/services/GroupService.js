@@ -1,31 +1,36 @@
 import http from "../http-commen"
 
 
-
-class GroupService {
-    getAllGroups() {
-        return http.get( 'group');
+    const getAllGroups=() => {
+        return http.get( '/group');
     }
 
-    get(id) {
-        return http.get(`group/${id}`);
+    const get=(id) => {
+        return http.get(`/group/${id}`);
     }
 
-    create() {
-        return http.post('group');
+    const create=()=> {
+        return http.post('/group');
     }
 
-    update(id , data){
-        return http.put(`group/${id}`, data);
+    const update=(id , data)=>{
+        return http.put(`/group/${id}`, data);
     }
 
-    delete(id) {
-        return http.delete(`group/${id}`);
+    const deleteById = (id) => {
+        return http.get(`/group/${id}`);
     }
 
-    findByTitle(userName) {
-        return http.get(`group?group-name=${userName}`);
+    const findByTitle =(userName) => {
+        return http.get(`/group?group-name=${userName}`);
     }
-}
+    const GroupService = {
+        get,
+        getAllGroups,
+        create,
+        update,
+        deleteById,
+        findByTitle
+    };
 
-export default new GroupService();
+export default GroupService;

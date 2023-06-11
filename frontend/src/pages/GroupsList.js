@@ -1,160 +1,97 @@
-
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import {useNavigate} from "react-router-dom";
 import GroupService from "../services/GroupService";
 import { Link } from "react-router-dom";
-import "../index.css"
 
+const GroupsList = () => {
+    const [groups, setGroups] = useState([]);
+    const [currentGroup, setCurrentGroup] = useState(null);
+    const [currentIndex, setCurrentIndex] = useState(-1);
 
-export default class GroupsList extends Component {
-    constructor(props) {
-        super(props);
+    const navigate = useNavigate();
 
-        this.retrieveGroups = this.retrieveGroups.bind(this);
-        this.refreshList = this.refreshList.bind(this);
-        this.setActiveGroup = this.setActiveGroup.bind(this);
-        //this.searchUserName = this.searchUserName.bind(this);
+    useEffect(() => {
+        retrieveGroups();
+    }, []);
 
-
-        this.state = {
-            groups: [],
-            currentGroup: null,
-            currentIndex: -1,
-            //username: ""
-        };
-    }
-
-    componentDidMount() {
-        this.retrieveGroups();
-    }
-
-
-
-    retrieveGroups() {
+    const retrieveGroups = () => {
         GroupService.getAllGroups()
             .then(response => {
-                this.setState({
-                    groups: response.data
-                });
+                setGroups(response.data);
                 console.log(response.data);
             })
             .catch(e => {
                 console.log(e);
             });
+    };
+
+    const AddGroup =() =>{
+        navigate("/add-group");
     }
+    const refreshList = () => {
+        retrieveGroups();
+        setCurrentGroup(null);
+        setCurrentIndex(-1);
+    };
 
-    refreshList() {
-        this.retrieveGroups();
-        this.setState({
-            currentGroup: null,
-            currentIndex: -1
-        });
-    }
+    const setActiveGroup = (tutorial, index) => {
+        setCurrentGroup(tutorial);
+        setCurrentIndex(index);
+    };
 
-    setActiveGroup(group, index) {
-        this.setState({
-            currentGroup: group,
-            currentIndex: index
-        });
-    }
+    return (
+        <div className="list row">
+            <div className="col-md-6">
+                <h4>Groups</h4>
 
-    /*
-        searchUserName() {
-            this.setState({
-                currentUser: null,
-                currentIndex: -1
-            });
-
-            UserListService.findByTitle(this.state.username)
-                .then(response => {
-                    this.setState({
-                        users: response.data
-                    });
-                    console.log(response.data);
-                })
-                .catch(e => {
-                    console.log(e);
-                });
-        }
-
-     */
-
-
-
-    render() {
-        const { //groupname,
-            groups, currentGroup, currentIndex } = this.state;
-
-        return (
-            <div className="list row">
-                <div className="col-md-8">
-                    {/*
-                    <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search by title"
-                            value={dirName}
-                            onChange={this.onChangeSearchDirName}
-                        />
-                        <div className="input-group-append">
-                            <button
-                                className="btn btn-outline-secondary"
-                                type="button"
-                                onClick={this.searchDirName}
+                <ul className="list-group">
+                    {groups &&
+                        groups.map((group, index) => (
+                            <li
+                                className={
+                                    "list-group-item " + (index === currentIndex ? "active" : "")
+                                }
+                                onClick={() => setActiveGroup(group, index)}
+                                key={index}
                             >
-                                Search
-                            </button>
+                                <Link
+                                    to={"/group/" + group.id}>
+                                    {group.name}
+                                </Link>
 
-                           <Link to={"/add-directory"}>
-                               Add
-                           </Link>
+                            </li>
+                        ))}
+                </ul>
+
+                <button
+                    className="m-3 btn btn-sm btn-danger"
+                    onClick={AddGroup}
+                >
+                    Add
+                </button>
+
+            </div>
+            <div className="col-md-6">
+                {currentGroup ? (
+                    <div>
+                        <h4>Groups</h4>
+                        <div>
+                            <label>
+                                <strong>Group:</strong>
+                            </label>{" "}
+                            {currentGroup.name}
                         </div>
 
                     </div>
-                    */}
-                </div>
-                <div className="directories">
-                    <h4>Groups List</h4>
-
-                    <ul className="directoriesList">
-                        {groups &&
-                            groups.map((group, index) => (
-                                <li
-                                    className={
-                                        "list-group-item " +
-                                        (index === currentIndex ? "active" : "")
-                                    }
-                                    onClick={() => this.setActiveGroup(group, index)}
-                                    key={index}
-                                >
-                                    {group.groupname}
-                                </li>
-                            ))}
-                    </ul>
-
-
-                </div>
-                <div className="col-md-6">
-                    {currentGroup ? (
-                        <div>
-                            <h4>Directory</h4>
-                            <Link
-                                to={"directory/" + currentGroup.id}
-                                className="badge badge-warning"
-                            >
-                                {currentGroup.username}
-                            </Link>
-                        </div>
-
-
-                    ) : (
-                        <div>
-                            <br />
-                            <p>Please click on a Group...</p>
-                        </div>
-                    )}
-                </div>
+                ) : (
+                    <div>
+                        <br />
+                        <p>click on a Group to edit...</p>
+                    </div>
+                )}
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
+
+export default GroupsList;
