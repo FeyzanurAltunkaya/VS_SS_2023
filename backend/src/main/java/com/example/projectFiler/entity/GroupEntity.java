@@ -29,6 +29,7 @@ public class GroupEntity {
     this.id = id;
   }
 
-  public String setName(String testGroup) { return name;}
-
+  public String setName(String testGroup) {
+    return name;
+  }
 }

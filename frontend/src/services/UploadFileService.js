@@ -1,4 +1,4 @@
-import http from "../http-commen";
+import http from "../http-files";
 
 const upload = (file, onUploadProgress) => {
     let formData = new FormData();
