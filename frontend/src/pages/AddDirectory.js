@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import DirService from "../services/DirService";
+import AuthService from "../services/AuthService";
 
 
 const AddDirectory = () => {
     const initialDirectoryState = {
         id: null,
         directoryName: "",
+        user : {id: null, username: ""},
 
     };
     const [directory, setDirectory] = useState(initialDirectoryState);
@@ -17,10 +19,11 @@ const AddDirectory = () => {
     };
 
     const saveTutorial = () => {
+        const username=AuthService.getCurrentUser().username;
+        const id=AuthService.getCurrentUser().id;
         const data = {
             directoryName: directory.directoryName,
-
-
+            user: {id: id, username: username}
         };
 
         DirService.create(data)
@@ -28,7 +31,7 @@ const AddDirectory = () => {
                 setDirectory({
                     id: response.data.id,
                     directoryName: response.data.directoryName,
-
+                    user:data.user
                 });
                 setSubmitted(true);
                 console.log(response.data);
@@ -59,13 +62,12 @@ const AddDirectory = () => {
                         <input
                             type="text"
                             className="form-control"
-                            id="title"
+                            //id="title"
                             value={directory.directoryName}
+                            name="directoryName"
                             onChange={handleInputChange}
-                            //name="title"
                         />
                     </div>
-
 
                     <button onClick={saveTutorial} className="btn btn-success">
                         Submit
