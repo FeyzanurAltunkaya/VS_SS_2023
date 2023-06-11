@@ -37,7 +37,7 @@ class DirControllerTest {
     @Test
     void testCreateDirectory() {
         DirectoryEntity directory = new DirectoryEntity();
-        directory.setDirname("Test Directory");
+        directory.setDirectoryName("Test Directory");
 
         when(directoryRepository.save(directory)).thenReturn(directory);
 
@@ -71,7 +71,7 @@ class DirControllerTest {
         Long id = 1L;
         DirectoryEntity directory = new DirectoryEntity();
         directory.setId(id);
-        directory.setDirname("Test Directory");
+        directory.setDirectoryName("Test Directory");
 
         when(directoryRepository.findById(id)).thenReturn(Optional.of(directory));
 
@@ -101,11 +101,11 @@ class DirControllerTest {
         Long id = 1L;
         DirectoryEntity existingDirectory = new DirectoryEntity();
         existingDirectory.setId(id);
-        existingDirectory.setDirname("Existing Directory");
+        existingDirectory.setDirectoryName("Existing Directory");
 
         DirectoryEntity updatedDirectory = new DirectoryEntity();
         updatedDirectory.setId(id);
-        updatedDirectory.setDirname("Updated Directory");
+        updatedDirectory.setDirectoryName("Updated Directory");
 
         when(directoryRepository.findById(id)).thenReturn(Optional.of(existingDirectory));
         when(directoryRepository.save(updatedDirectory)).thenReturn(updatedDirectory);
@@ -124,7 +124,7 @@ class DirControllerTest {
         Long id = 1L;
         DirectoryEntity directory = new DirectoryEntity();
         directory.setId(id);
-        directory.setDirname("Test Directory");
+        directory.setDirectoryName("Test Directory");
 
         when(directoryRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -141,7 +141,7 @@ class DirControllerTest {
         Long id = 1L;
         DirectoryEntity directory = new DirectoryEntity();
         directory.setId(id);
-        directory.setDirname("Test Directory");
+        directory.setDirectoryName("Test Directory");
 
         when(directoryRepository.findById(id)).thenReturn(Optional.of(directory));
 
