@@ -84,7 +84,7 @@ const TestDirectoriesHooks = () => {
                             >
                                 <Link
                                     to={"/directories/" + tutorial.id}>
-                                    {tutorial.dirname}
+                                    {tutorial.directoryName}
                                 </Link>
 
                             </li>
@@ -115,7 +115,7 @@ const TestDirectoriesHooks = () => {
                             <label>
                                 <strong>Title:</strong>
                             </label>{" "}
-                            {currentDirectory.dirname}
+                            {currentDirectory.directoryName}
                         </div>
 
                     </div>

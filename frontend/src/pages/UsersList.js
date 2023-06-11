@@ -13,6 +13,7 @@ import {faUserPen} from "@fortawesome/free-solid-svg-icons";
 
 const UsersList = () => {
 
+
     const [users , setUsers] = useState();
     const [currentUser, setCurrentUser] = useState();
     const [currentIndex, setCurrentIndex] = useState(-1);
@@ -26,7 +27,7 @@ const UsersList = () => {
 
 
     const retrieveUsers = () => {
-        UserListService.getAllUsers()
+        UserListService.getAll()
             .then(response => {
                 setUsers(response.data);
                 console.log(response.data);

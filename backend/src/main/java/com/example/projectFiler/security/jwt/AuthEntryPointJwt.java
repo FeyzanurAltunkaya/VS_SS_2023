@@ -27,8 +27,16 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
     throws IOException, ServletException {
     logger.error("Unauthorized error: {}", authException.getMessage());
 
-    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-    //response.setContentType(MediaType.MULTIPART_FORM_DATA_VALUE);
+    String contentType = request.getContentType();
+
+    if (
+      contentType != null && contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)
+    ) {
+      response.setContentType(MediaType.MULTIPART_FORM_DATA_VALUE);
+    } else {
+      response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+    }
+
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
     final Map<String, Object> body = new HashMap<>();
@@ -39,6 +47,5 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
     final ObjectMapper mapper = new ObjectMapper();
     mapper.writeValue(response.getOutputStream(), body);
-    //    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
   }
 }

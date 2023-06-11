@@ -1,31 +1,41 @@
 import http from "../http-commen"
 
+const getAll = () => {
+    return http.get("/users");
+};
 
+const get = id => {
+    return http.get(`/users/${id}`);
+};
 
-class UserListService {
-    getAllUsers() {
-        return http.get( 'users');
-    }
+const create = data => {
+    return http.post("/users", data);
+};
 
-    get(id) {
-        return http.get(`users/${id}`);
-    }
+const update = (id, data) => {
+    return http.put(`/users/${id}`, data);
+};
 
-    create() {
-        return http.post('users');
-    }
+const remove = id => {
+    return http.delete(`/users/${id}`);
+};
 
-    update(id , data){
-        return http.put(`users/${id}`, data);
-    }
+const removeAll = () => {
+    return http.delete(`/users`);
+};
 
-    delete(id) {
-        return http.delete(`users/${id}`);
-    }
+const findByTitle = title => {
+    return http.get(`/users?username=${title}`);
+};
 
-    findByTitle(userName) {
-        return http.get(`users?username=${userName}`);
-    }
-}
+const UserListService = {
+    getAll,
+    get,
+    create,
+    update,
+    remove,
+    removeAll,
+    findByTitle
+};
 
-export default new UserListService();
+export default UserListService;
