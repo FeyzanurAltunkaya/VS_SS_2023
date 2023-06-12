@@ -131,7 +131,8 @@ class App extends Component {
                         <Route path="/" element={<Home/>}/>
                         <Route path="/home" element={<Home/>}/>
                         <Route path="/users/:id" element={<OneUser/>}/>
-                        <Route path="/add-user" element={<Register/>}/>
+                        <Route path="/add-user" element={<AddUser/>}/>
+                        <Route path="/add-directory" element={<AddDirectory/>}/>
                         <Route path="/users-list" element={<UsersList/>}/>
                         <Route path="/groups-list" element={<GroupsList/>}/>
                         <Route path="/directories" element={<TestDirectoriesHooks/>}/>

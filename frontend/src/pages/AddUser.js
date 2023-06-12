@@ -1,49 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserListService from "../services/UserListService";
 import AuthService from "../services/AuthService";
-
 
 const AddUser = () => {
     const initialUserState = {
         id: null,
         username: "",
         password: "",
-        roles: [],
+        roles: "",
     };
     const [user, setUser] = useState(initialUserState);
     const [submitted, setSubmitted] = useState(false);
-    const [selectValue , setSelectValue] = useState();
 
-    const handleInputChange = event => {
+    const handleInputChange = (event) => {
         const { name, value } = event.target;
         setUser({ ...user, [name]: value });
     };
 
-    const handleSelectChange = event =>{
-        const value = event.target.value;
-        setSelectValue(value);
-    }
+    const handleSelectChange = (event) => {
+        const { value } = event.target;
+        setUser({ ...user, roles: value });
+    };
 
     const saveTutorial = () => {
         const data = {
             id: user.id,
             username: user.username,
             password: user.password,
-            roles: user.roles
+            roles: user.roles,
         };
 
-        UserListService.create(data)
-            .then(response => {
+        UserListService.register(data.username, data.password)
+            .then((response) => {
                 setUser({
                     id: response.data.id,
                     username: response.data.username,
                     password: response.data.password,
-                    roles: response.data.roles
+                    roles: response.data.roles,
                 });
                 setSubmitted(true);
-                console.log(response.data);
             })
-            .catch(e => {
+            .catch((e) => {
                 console.log(e);
             });
     };
@@ -52,6 +49,12 @@ const AddUser = () => {
         setUser(initialUserState);
         setSubmitted(false);
     };
+
+    useEffect(() => {
+        if (submitted) {
+            saveTutorial();
+        }
+    }, [submitted]);
 
     return (
         <div className="submit-form">
@@ -65,16 +68,16 @@ const AddUser = () => {
             ) : (
                 <div>
                     <div className="form-group">
-                        <label htmlFor="title">Username</label>
+                        <label htmlFor="username">Username</label>
                         <input
                             type="text"
                             className="form-control"
-                            id="title"
+                            id="username"
                             value={user.username}
                             onChange={handleInputChange}
                             name="username"
                         />
-                        <label htmlFor="title">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input
                             type="password"
                             className="form-control"
@@ -83,18 +86,20 @@ const AddUser = () => {
                             value={user.password}
                             onChange={handleInputChange}
                         />
-
-
-                        <select onChange={handleInputChange} className="form-control" >
-                            <option defaultValue disabled> Select Role</option>
-                            <option value={user.roles} name="roles">ROLE_ADMIN</option>
-                            <option value={user.roles} name="roles">ROLE_USER</option>
+                        <label htmlFor="roles">Role</label>
+                        <select
+                            className="form-control"
+                            id="roles"
+                            name="roles"
+                            value={user.roles}
+                            onChange={handleSelectChange}
+                        >
+                            <option value="">Select Role</option>
+                            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                            <option value="ROLE_USER">ROLE_USER</option>
                         </select>
-                        {/*selectValue && <h3>{selectValue}</h3>*/}
                     </div>
-
-
-                    <button onClick={saveTutorial} className="btn btn-success">
+                    <button onClick={saveTutorial} className="submitButton">
                         Submit
                     </button>
                 </div>

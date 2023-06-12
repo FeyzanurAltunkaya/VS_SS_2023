@@ -6,7 +6,7 @@ const AddGroup = () => {
     const initialDirectoryState = {
         id: null,
         name: "",
-        users: [{}]
+
     };
     const [group, setGroup] = useState(initialDirectoryState);
     const [submitted, setSubmitted] = useState(false);
@@ -19,7 +19,7 @@ const AddGroup = () => {
     const saveTutorial = () => {
         const data = {
             name: group.name,
-            users: group.users
+
         };
 
         GroupService.create(data)
@@ -27,7 +27,7 @@ const AddGroup = () => {
                 setGroup({
                     id: response.data.id,
                     name: response.data.name,
-                    users: response.data.users
+
                 });
                 setSubmitted(true);
                 console.log(response.data);

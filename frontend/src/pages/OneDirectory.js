@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import DirService from "../services/DirService";
+import AuthService from "../services/AuthService";
 
 const OneDirectory = props => {
     const { id }= useParams();
@@ -9,14 +10,29 @@ const OneDirectory = props => {
     const initialDirectoryState = {
         id: null,
         dirname: "",
+        user: {id: null,
+            username : ""}
     };
     const [currentDirectory, setCurrentDirectory] = useState(initialDirectoryState);
     const [message, setMessage] = useState("");
 
+    const userId = AuthService.getCurrentUser().id;
+    const userName = AuthService.getCurrentUser().username;
+
     const getDirectory = id => {
-        DirService.get(id)
+
+        const data = {
+            dirname: currentDirectory.dirname,
+            user: { id: userId,
+                    username: userName}
+        }
+        DirService.getOneDirectoryOfUser(userId, id)
             .then(response => {
-                setCurrentDirectory(response.data);
+                setCurrentDirectory({
+                    id: response.data.id,
+                    dirname: response.data.dirname,
+                    user: response.data.user
+                });
                 console.log(response.data);
             })
             .catch(e => {
@@ -34,23 +50,6 @@ const OneDirectory = props => {
         setCurrentDirectory({ ...currentDirectory, [name]: value });
     };
 
-    const updatePublished = status => {
-        var data = {
-            id: currentDirectory.id,
-            dirname: currentDirectory.dirname,
-
-        };
-
-        DirService.update(currentDirectory.id, data)
-            .then(response => {
-                setCurrentDirectory({ ...currentDirectory, published: status });
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
-
     const updateTutorial = () => {
         DirService.update(currentDirectory.id, currentDirectory)
             .then(response => {
@@ -63,7 +62,7 @@ const OneDirectory = props => {
     };
 
     const deleteTutorial = () => {
-        DirService.remove(currentDirectory.id)
+        DirService.deleteOneDirectoryOfUser(userId , id)
             .then(response => {
                 console.log(response.data);
                 navigate("/tutorials");
@@ -85,7 +84,7 @@ const OneDirectory = props => {
                                 type="text"
                                 className="form-control"
                                 id="title"
-                                name="title"
+                                name="dirname"
                                 value={currentDirectory.dirname}
                                 onChange={handleInputChange}
                             />

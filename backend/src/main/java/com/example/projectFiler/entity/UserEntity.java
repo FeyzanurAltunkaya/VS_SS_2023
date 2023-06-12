@@ -1,9 +1,11 @@
 package com.example.projectFiler.entity;
 
+import com.example.projectFiler.entity.DirectoryEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,26 +18,15 @@ public class UserEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  //@Column(name = "first_name", nullable = false)
-
   @Size(max = 20)
   private String firstName;
-
-  //@Column(name = "last_name", nullable = false)
 
   @Size(max = 40)
   private String lastName;
 
-  //@Column(name = "password", nullable = false)
   @NotBlank
   @Size(max = 50)
   private String password;
-
-  //@Column(name = "is_logged_in", nullable = false)
-  private boolean isLoggedIn = false;
-
-  //@Column(name = "is_admin", nullable = false)
-  private boolean isAdmin = false;
 
   // new
   @NotBlank
@@ -57,6 +48,9 @@ public class UserEntity {
     inverseJoinColumns = @JoinColumn(name = "group_id")
   )
   private Set<GroupEntity> groups = new HashSet<>();
+
+  @OneToMany(mappedBy = "user")
+  private List<DirectoryEntity> directories;
 
   //new
   public UserEntity() {}

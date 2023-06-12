@@ -28,6 +28,13 @@ const findByTitle = title => {
     return http.get(`/users?username=${title}`);
 };
 
+const register = (username , password) =>{
+    return http.post("http://localhost:8080/api/auth/signup", {
+        username,
+        password
+    })
+}
+
 const UserListService = {
     getAll,
     get,
@@ -35,7 +42,8 @@ const UserListService = {
     update,
     remove,
     removeAll,
-    findByTitle
+    findByTitle,
+    register
 };
 
 export default UserListService;
