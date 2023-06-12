@@ -3,7 +3,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import "./index.css"
 import GroupService from "./services/GroupService";
-import GroupsLists from "./services/GroupsLists";
+
 import AuthService from "./services/AuthService";
 
 import Login from "./pages/Login";
@@ -24,7 +24,7 @@ import TestDirectoriesHooks from "./pages/TestDirectoriesHooks";
 import OneDirectory from "./pages/OneDirectory";
 import OneUser from "./pages/OneUser";
 import AddUser from "./pages/AddUser";
-import AddGroup from "./pages/AddGroup";
+
 
 class App extends Component {
     constructor(props) {
@@ -133,6 +133,7 @@ class App extends Component {
                         <Route path="/users/:id" element={<OneUser/>}/>
                         <Route path="/add-user" element={<Register/>}/>
                         <Route path="/users-list" element={<UsersList/>}/>
+                        <Route path="/groups-list" element={<GroupsList/>}/>
                         <Route path="/directories" element={<TestDirectoriesHooks/>}/>
                         <Route path="/directories/:id" element={<OneDirectory/>}/>
                         <Route path="/upload" element={<UploadFiles/>}/>

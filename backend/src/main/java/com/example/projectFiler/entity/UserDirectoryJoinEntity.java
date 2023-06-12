@@ -28,9 +28,8 @@ public class UserDirectoryJoinEntity {
   public UserEntity getUser() {
     return user;
   }
+
   public DirectoryEntity getDirectory() {
     return directory;
   }
-
-
 }
