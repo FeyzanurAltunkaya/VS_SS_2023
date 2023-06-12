@@ -1,13 +1,12 @@
 package com.example.projectFiler.entity;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.example.projectFiler.entity.GroupEntity;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class GroupEntityTest {
 
-  /* @Test
+   /* @Test
     void testGetName() {
         // Create a new group entity
         GroupEntity group = new GroupEntity();
@@ -17,32 +16,33 @@ class GroupEntityTest {
         assertEquals("TestGroup", group.getName());
     }*/
 
-  @Test
-  void testGetId() {
-    // Create a new group entity
-    GroupEntity group = new GroupEntity();
-    group.setId(1L);
+    @Test
+    void testGetId() {
+        // Create a new group entity
+        GroupEntity group = new GroupEntity();
+        group.setId(1L);
 
-    // Verify the group's ID
-    assertEquals(1L, group.getId());
-  }
+        // Verify the group's ID
+        assertEquals(1L, group.getId());
+    }
 
-  @Test
-  void testSetId() {
-    // Create a new group entity
-    GroupEntity group = new GroupEntity();
-    group.setId(1L);
+    @Test
+    void testSetId() {
+        // Create a new group entity
+        GroupEntity group = new GroupEntity();
+        group.setId(1L);
 
-    // Verify the group's ID
-    assertEquals(1L, group.getId());
+        // Verify the group's ID
+        assertEquals(1L, group.getId());
 
-    // Set a new ID
-    group.setId(2L);
+        // Set a new ID
+        group.setId(2L);
 
-    // Verify the updated ID
-    assertEquals(2L, group.getId());
-  }
-  /*@Test
+        // Verify the updated ID
+        assertEquals(2L, group.getId());
+    }
+
+    /*@Test
     void testSetName() {
         // Create a new group entity
         GroupEntity group = new GroupEntity();

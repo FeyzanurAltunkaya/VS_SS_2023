@@ -12,8 +12,6 @@ const AddDirectory = () => {
     };
     const [directory, setDirectory] = useState(initialDirectoryState);
     const [submitted, setSubmitted] = useState(false);
-    const username=AuthService.getCurrentUser().username;
-    const userId=AuthService.getCurrentUser().id;
 
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -21,13 +19,11 @@ const AddDirectory = () => {
     };
 
     const saveTutorial = () => {
-
-
+        const username=AuthService.getCurrentUser().username;
+        const id=AuthService.getCurrentUser().id;
         const data = {
             directoryName: directory.directoryName,
-            user: {id: userId,
-                    username: username
-            }
+            user: {id: id, username: username}
         };
 
         DirService.create(data)
@@ -35,7 +31,7 @@ const AddDirectory = () => {
                 setDirectory({
                     id: response.data.id,
                     directoryName: response.data.directoryName,
-                    user:{ id: response.data.user.id, username: response.data.user.username}
+                    user:data.user
                 });
                 setSubmitted(true);
                 console.log(response.data);
@@ -44,21 +40,6 @@ const AddDirectory = () => {
                 console.log(e);
             });
     };
-
-    const addUserToDirectory = () => {
-        const directoryId = directory.id;
-
-        DirService.addUserToDirectory(userId, directoryId)
-            .then((response) => {
-                console.log(response.data);
-                // Handle success, e.g., show a success message or update the component state.
-            })
-            .catch((error) => {
-                console.log(error);
-                // Handle error, e.g., show an error message or perform additional actions.
-            });
-    };
-
 
     const newTutorial = () => {
         setDirectory(initialDirectoryState);
@@ -70,7 +51,7 @@ const AddDirectory = () => {
             {submitted ? (
                 <div>
                     <h4>You submitted successfully!</h4>
-                    <button className="btn btn-success" onClick={addUserToDirectory}>
+                    <button className="btn btn-success" onClick={newTutorial}>
                         Add
                     </button>
                 </div>

@@ -90,9 +90,9 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
       .cors()
       .disable()
       .csrf(csrf -> csrf.disable())
-      .exceptionHandling(
-        exception -> exception.authenticationEntryPoint(unauthorizedHandler)
-      )
+      //.exceptionHandling(
+      // exception -> exception.authenticationEntryPoint(unauthorizedHandler)
+      //)
       .sessionManagement(
         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       )

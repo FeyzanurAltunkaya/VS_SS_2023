@@ -23,7 +23,8 @@ public class DockerPostgresSpringbootApplication {
 
       @Override
       public void addCorsMappings(CorsRegistry reg) {
-        reg.addMapping("/**").allowedOrigins("*");
+
+        reg.addMapping("http://localhost:8080/**").allowedOrigins("*");
       }
     };
   }
