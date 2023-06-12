@@ -9,6 +9,7 @@ const OneDirectory = props => {
     const initialDirectoryState = {
         id: null,
         dirname: "",
+        user:{}
     };
     const [currentDirectory, setCurrentDirectory] = useState(initialDirectoryState);
     const [message, setMessage] = useState("");
@@ -38,7 +39,7 @@ const OneDirectory = props => {
         var data = {
             id: currentDirectory.id,
             dirname: currentDirectory.dirname,
-
+            user: currentDirectory.user
         };
 
         DirService.update(currentDirectory.id, data)

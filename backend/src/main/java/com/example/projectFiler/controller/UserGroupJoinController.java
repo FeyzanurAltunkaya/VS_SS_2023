@@ -1,11 +1,13 @@
 package com.example.projectFiler.controller;
 
 import com.example.projectFiler.entity.GroupEntity;
+import com.example.projectFiler.entity.UserDirectoryJoinEntity;
 import com.example.projectFiler.entity.UserEntity;
 import com.example.projectFiler.entity.UserGroupJoinEntity;
 import com.example.projectFiler.repository.GroupRepository;
 import com.example.projectFiler.repository.UserGroupJoinRepository;
 import com.example.projectFiler.repository.UserRepository;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,42 @@ public class UserGroupJoinController {
     this.userGroupJoinRepository = userGroupJoinRepository;
     this.userRepository = userRepository;
     this.groupRepository = groupRepository;
+  }
+
+  @GetMapping
+  public List<UserGroupJoinEntity> getAllUserGroups() {
+    return userGroupJoinRepository.findAll();
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<UserGroupJoinEntity> getUserGroupById(@PathVariable Long id) {
+    Optional<UserGroupJoinEntity> usergroup = userGroupJoinRepository.findById(id);
+    return usergroup.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<UserGroupJoinEntity> updateUserGroup(
+    @PathVariable Long id,
+    @RequestBody UserGroupJoinEntity usergroup
+  ) {
+    Optional<UserGroupJoinEntity> existingUserGroup = userGroupJoinRepository.findById(
+      id
+    );
+    if (existingUserGroup.isPresent()) {
+      usergroup.setId(id);
+      UserGroupJoinEntity updatedUserGroup = userGroupJoinRepository.save(usergroup);
+      return ResponseEntity.ok(updatedUserGroup);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
+  }
+
+  @PostMapping
+  public ResponseEntity<UserGroupJoinEntity> createUserGroup(
+    @RequestBody UserGroupJoinEntity userdroup
+  ) {
+    UserGroupJoinEntity createdGroup = userGroupJoinRepository.save(userdroup);
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdGroup);
   }
 
   @PostMapping("/{userId}/groups/{groupId}")
