@@ -25,11 +25,10 @@ public class UserGroupJoinEntity {
     this.group = group;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   public GroupEntity getGroup() {
     return group;
+  }
+  public UserEntity getUser(){
+    return user;
   }
 }
