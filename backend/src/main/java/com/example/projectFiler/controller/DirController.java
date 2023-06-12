@@ -1,8 +1,6 @@
 package com.example.projectFiler.controller;
 
 import com.example.projectFiler.entity.DirectoryEntity;
-import com.example.projectFiler.entity.GroupEntity;
-import com.example.projectFiler.entity.UserEntity;
 import com.example.projectFiler.repository.DirectoryRepository;
 import com.example.projectFiler.repository.UserRepository;
 import java.util.List;
@@ -48,9 +46,9 @@ public class DirController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<DirectoryEntity> getDirectoryById(@PathVariable Long id) {
-    Optional<DirectoryEntity> directory = directoryRepository.findById(id);
-    return directory.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+  public Optional<DirectoryEntity> getDirectoryById(@PathVariable Long id) {
+    // Optional<DirectoryEntity> directory = directoryRepository.findById(id);
+    return directoryRepository.findById(id);
   }
 
   @PutMapping("/{id}")
