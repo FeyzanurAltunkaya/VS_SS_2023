@@ -1,37 +1,33 @@
 import React, { useState } from "react";
-import DirService from "../services/DirService";
-import AuthService from "../services/AuthService";
+import GroupService from "../services/GroupService";
 
 
-const AddDirectory = () => {
+const AddGroup = () => {
     const initialDirectoryState = {
         id: null,
-        directoryName: "",
-        user : {id: null, username: ""},
-
+        name: "",
+        users: [{}]
     };
-    const [directory, setDirectory] = useState(initialDirectoryState);
+    const [group, setGroup] = useState(initialDirectoryState);
     const [submitted, setSubmitted] = useState(false);
 
     const handleInputChange = event => {
         const { name, value } = event.target;
-        setDirectory({ ...directory, [name]: value });
+        setGroup({ ...group, [name]: value });
     };
 
     const saveTutorial = () => {
-        const username=AuthService.getCurrentUser().username;
-        const id=AuthService.getCurrentUser().id;
         const data = {
-            directoryName: directory.directoryName,
-            user: {id: id, username: username}
+            name: group.name,
+            users: group.users
         };
 
-        DirService.create(data)
+        GroupService.create(data)
             .then(response => {
-                setDirectory({
+                setGroup({
                     id: response.data.id,
-                    directoryName: response.data.directoryName,
-                    user:data.user
+                    name: response.data.name,
+                    users: response.data.users
                 });
                 setSubmitted(true);
                 console.log(response.data);
@@ -42,7 +38,7 @@ const AddDirectory = () => {
     };
 
     const newTutorial = () => {
-        setDirectory(initialDirectoryState);
+        setGroup(initialDirectoryState);
         setSubmitted(false);
     };
 
@@ -62,12 +58,13 @@ const AddDirectory = () => {
                         <input
                             type="text"
                             className="form-control"
-                            //id="title"
-                            value={directory.directoryName}
-                            name="directoryName"
+                            id="title"
+                            value={group.name}
                             onChange={handleInputChange}
+                            name="name"
                         />
                     </div>
+
 
                     <button onClick={saveTutorial} className="btn btn-success">
                         Submit
@@ -78,4 +75,4 @@ const AddDirectory = () => {
     );
 };
 
-export default AddDirectory;
+export default AddGroup;

@@ -70,7 +70,6 @@ export default class Profile extends Component {
                             <Link to="/users-list" >
                                 Manage Users
                             </Link>
-
                                 <Link to="/groups-list">
                                     Manage Groups
                                 </Link>
