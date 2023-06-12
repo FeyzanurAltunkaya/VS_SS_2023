@@ -28,9 +28,12 @@ public class UserDirectoryJoinEntity {
   public UserEntity getUser() {
     return user;
   }
+
   public DirectoryEntity getDirectory() {
     return directory;
   }
 
-
+  public void setId(Long id) {
+    this.id = id;
+  }
 }

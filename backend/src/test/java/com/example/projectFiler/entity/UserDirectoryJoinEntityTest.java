@@ -1,45 +1,48 @@
 package com.example.projectFiler.entity;
-import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 public class UserDirectoryJoinEntityTest {
 
-    @Test
-    public void setUser_ShouldSetUserEntity() {
-        UserEntity user = new UserEntity();
-        UserDirectoryJoinEntity userDirectoryJoin = new UserDirectoryJoinEntity();
+  @Test
+  public void setUser_ShouldSetUserEntity() {
+    UserEntity user = new UserEntity();
+    UserDirectoryJoinEntity userDirectoryJoin = new UserDirectoryJoinEntity();
 
-        userDirectoryJoin.setUser(user);
+    userDirectoryJoin.setUser(user);
 
-        assertEquals(user, userDirectoryJoin.getUser());
-    }
+    assertEquals(user, userDirectoryJoin.getUser());
+  }
 
-    @Test
-    public void getUser_ShouldReturnUserEntity() {
-        UserEntity user = new UserEntity();
-        UserDirectoryJoinEntity userDirectoryJoin = new UserDirectoryJoinEntity();
+  @Test
+  public void getUser_ShouldReturnUserEntity() {
+    UserEntity user = new UserEntity();
+    UserDirectoryJoinEntity userDirectoryJoin = new UserDirectoryJoinEntity();
 
-        userDirectoryJoin.setUser(user);
+    userDirectoryJoin.setUser(user);
 
-        assertEquals(user, userDirectoryJoin.getUser());
-    }
-    @Test
-    public void setDirectory_ShouldSetDirectoryEntity() {
-        DirectoryEntity directory = new DirectoryEntity();
-        UserDirectoryJoinEntity userDirectoryJoin = new UserDirectoryJoinEntity();
+    assertEquals(user, userDirectoryJoin.getUser());
+  }
 
-        userDirectoryJoin.setDirectory(directory);
+  @Test
+  public void setDirectory_ShouldSetDirectoryEntity() {
+    DirectoryEntity directory = new DirectoryEntity();
+    UserDirectoryJoinEntity userDirectoryJoin = new UserDirectoryJoinEntity();
 
-        assertEquals(directory, userDirectoryJoin.getDirectory());
-    }
+    userDirectoryJoin.setDirectory(directory);
 
-    @Test
-    public void getDirectory_ShouldReturnDirectoryEntity() {
-        DirectoryEntity directory = new DirectoryEntity();
-        UserDirectoryJoinEntity userDirectoryJoin = new UserDirectoryJoinEntity();
+    assertEquals(directory, userDirectoryJoin.getDirectory());
+  }
 
-        userDirectoryJoin.setDirectory(directory);
+  @Test
+  public void getDirectory_ShouldReturnDirectoryEntity() {
+    DirectoryEntity directory = new DirectoryEntity();
+    UserDirectoryJoinEntity userDirectoryJoin = new UserDirectoryJoinEntity();
 
-        assertEquals(directory, userDirectoryJoin.getDirectory());
-    }
+    userDirectoryJoin.setDirectory(directory);
+
+    assertEquals(directory, userDirectoryJoin.getDirectory());
+  }
 }

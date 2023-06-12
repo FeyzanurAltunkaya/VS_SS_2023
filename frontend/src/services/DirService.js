@@ -1,4 +1,4 @@
-import http from "../http-commen"
+import http from "../http-files"
 
 const getAll = () => {
     return http.get("/directory");
@@ -7,6 +7,10 @@ const getAll = () => {
 const get = id => {
     return http.get(`/directory/${id}`);
 };
+
+const getAllDirectoriesByUser = userId =>{
+    return http.get(`/userdirectory/${userId}/directories`);
+}
 
 const create = data => {
     return http.post("/directory", data);
@@ -21,11 +25,15 @@ const remove = id => {
 };
 
 const removeAll = () => {
-    return http.delete(`/directory`);
+    return http.delete("/directory");
 };
 
 const findByTitle = title => {
     return http.get(`/directory?dirName=${title}`);
+};
+
+const addUserToDirectory = (userId, directoryId) => {
+    return http.post(`/userdirectory/${userId}/directories/${directoryId}`);
 };
 
 const DirService = {
@@ -35,7 +43,9 @@ const DirService = {
     update,
     remove,
     removeAll,
-    findByTitle
+    findByTitle,
+    getAllDirectoriesByUser,
+    addUserToDirectory
 };
 
 export default DirService;

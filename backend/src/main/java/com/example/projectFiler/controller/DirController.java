@@ -78,4 +78,9 @@ public class DirController {
       return ResponseEntity.notFound().build();
     }
   }
+
+  @DeleteMapping
+  public void deleteAllDirectories() {
+    directoryRepository.deleteAll();
+  }
 }
