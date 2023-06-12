@@ -91,7 +91,7 @@ const TestDirectoriesHooks = () => {
                         ))}
                 </ul>
 
-                <div class="buttonsList">
+                <div className="buttonsList">
                 <button
                     className="m-3 btn btn-sm btn-danger"
                     onClick={removeAllTutorials}

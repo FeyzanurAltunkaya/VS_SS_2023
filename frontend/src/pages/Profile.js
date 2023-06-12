@@ -65,11 +65,15 @@ export default class Profile extends Component {
 
                     {currentUser.roles &&
                         currentUser.roles.map((role) =>  role == "ROLE_ADMIN" ?
-                            <div>
+                            <div key={role} className="manageBox">
                                 <h2>Hello Admin</h2>
-                            <Link to="/users-list">
+                            <Link to="/users-list" >
                                 Manage Users
                             </Link>
+
+                                <Link to="/groups-list">
+                                    Manage Groups
+                                </Link>
                             </div>: <h2>Hello User</h2>)
                     }
 

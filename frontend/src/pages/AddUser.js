@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import UserListService from "../services/UserListService";
-import UserService from "../services/UserService";
+import AuthService from "../services/AuthService";
 
 
 const AddUser = () => {
@@ -8,20 +8,28 @@ const AddUser = () => {
         id: null,
         username: "",
         password: "",
+        roles: [],
     };
     const [user, setUser] = useState(initialUserState);
     const [submitted, setSubmitted] = useState(false);
+    const [selectValue , setSelectValue] = useState();
 
     const handleInputChange = event => {
         const { name, value } = event.target;
         setUser({ ...user, [name]: value });
     };
 
+    const handleSelectChange = event =>{
+        const value = event.target.value;
+        setSelectValue(value);
+    }
+
     const saveTutorial = () => {
         const data = {
+            id: user.id,
             username: user.username,
-            password: user.password
-
+            password: user.password,
+            roles: user.roles
         };
 
         UserListService.create(data)
@@ -29,7 +37,8 @@ const AddUser = () => {
                 setUser({
                     id: response.data.id,
                     username: response.data.username,
-                    password: response.data.password
+                    password: response.data.password,
+                    roles: response.data.roles
                 });
                 setSubmitted(true);
                 console.log(response.data);
@@ -63,7 +72,7 @@ const AddUser = () => {
                             id="title"
                             value={user.username}
                             onChange={handleInputChange}
-                            //name="title"
+                            name="username"
                         />
                         <label htmlFor="title">Password</label>
                         <input
@@ -74,6 +83,14 @@ const AddUser = () => {
                             value={user.password}
                             onChange={handleInputChange}
                         />
+
+
+                        <select onChange={handleInputChange} className="form-control" >
+                            <option defaultValue disabled> Select Role</option>
+                            <option value={user.roles} name="roles">ROLE_ADMIN</option>
+                            <option value={user.roles} name="roles">ROLE_USER</option>
+                        </select>
+                        {/*selectValue && <h3>{selectValue}</h3>*/}
                     </div>
 
 
