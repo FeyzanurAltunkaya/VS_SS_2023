@@ -295,3 +295,9 @@ h2 {
 
   background-color: #f2f2f2;
 }
+
+.manageBox{
+  width: 100%;
+  display: flex;
+  padding: 20px;
+}
