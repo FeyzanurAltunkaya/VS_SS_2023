@@ -68,6 +68,11 @@ public class DirController {
     }
   }
 
+  @DeleteMapping
+  public void deleteAllDirectories() {
+    directoryRepository.deleteAll();
+  }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteDirectory(@PathVariable Long id) {
     Optional<DirectoryEntity> directory = directoryRepository.findById(id);

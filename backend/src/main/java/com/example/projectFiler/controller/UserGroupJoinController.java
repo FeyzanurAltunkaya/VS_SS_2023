@@ -6,6 +6,7 @@ import com.example.projectFiler.entity.UserGroupJoinEntity;
 import com.example.projectFiler.repository.GroupRepository;
 import com.example.projectFiler.repository.UserGroupJoinRepository;
 import com.example.projectFiler.repository.UserRepository;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,12 @@ public class UserGroupJoinController {
   private final UserGroupJoinRepository userGroupJoinRepository;
   private final UserRepository userRepository;
   private final GroupRepository groupRepository;
+
+  @GetMapping("/{id}")
+  public ResponseEntity<UserGroupJoinEntity> getUserGroupById(@PathVariable Long id) {
+    Optional<UserGroupJoinEntity> usergroup = userGroupJoinRepository.findById(id);
+    return usergroup.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+  }
 
   @Autowired
   public UserGroupJoinController(
