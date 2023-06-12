@@ -24,4 +24,11 @@ public class UserGroupJoinEntity {
   public void setGroup(GroupEntity group) {
     this.group = group;
   }
+
+  public GroupEntity getGroup() {
+    return group;
+  }
+  public UserEntity getUser(){
+    return user;
+  }
 }
