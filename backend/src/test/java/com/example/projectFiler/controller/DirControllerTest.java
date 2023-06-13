@@ -1,16 +1,7 @@
-/*
 package com.example.projectFiler.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
-import com.example.projectFiler.controller.DirController;
 import com.example.projectFiler.entity.DirectoryEntity;
 import com.example.projectFiler.repository.DirectoryRepository;
-import com.example.projectFiler.repository.UserRepository;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,158 +10,110 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-class DirControllerTest {
-  @Mock
-  private DirectoryRepository directoryRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-  @Mock
-  private UserRepository userRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
-  @InjectMocks
-  private DirController dirController;
+public class DirControllerTest {
 
-  @BeforeEach
-  void setUp() {
-    MockitoAnnotations.openMocks(this);
-  }
+    @Mock
+    private DirectoryRepository directoryRepository;
+
+    @InjectMocks
+    private DirController dirController;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
-    void testCreateDirectory() {
+    public void testCreateDirectory() {
         DirectoryEntity directory = new DirectoryEntity();
         directory.setDirectoryName("Test Directory");
 
-    when(directoryRepository.save(directory)).thenReturn(directory);
+        DirectoryEntity savedDirectory = new DirectoryEntity();
+        savedDirectory.setId(1L);
+        savedDirectory.setDirectoryName("Test Directory");
 
-    ResponseEntity<DirectoryEntity> response = dirController.createDirectory(directory);
+        when(directoryRepository.save(directory)).thenReturn(savedDirectory);
 
-    assertEquals(HttpStatus.CREATED, response.getStatusCode());
-    assertEquals(directory, response.getBody());
+        ResponseEntity<DirectoryEntity> response = dirController.createDirectory(directory);
 
-    verify(directoryRepository, times(1)).save(directory);
-  }
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(savedDirectory, response.getBody());
 
-  @Test
-  void testGetAllDirectories() {
-    List<DirectoryEntity> directories = new ArrayList<>();
-    directories.add(new DirectoryEntity());
-    directories.add(new DirectoryEntity());
-
-    when(directoryRepository.findAll()).thenReturn(directories);
-
-    List<DirectoryEntity> response = dirController.getAllDirectories();
-
-    assertEquals(directories.size(), response.size());
-    assertEquals(directories.get(0), response.get(0));
-    assertEquals(directories.get(1), response.get(1));
-
-    verify(directoryRepository, times(1)).findAll();
-  }
+        verify(directoryRepository, times(1)).save(directory);
+    }
 
     @Test
-    void testGetDirectoryById_ExistingId() {
-        Long id = 1L;
+    public void testGetAllDirectories() {
+        List<DirectoryEntity> directories = new ArrayList<>();
+        directories.add(new DirectoryEntity());
+        directories.add(new DirectoryEntity());
+
+        when(directoryRepository.findAll()).thenReturn(directories);
+
+        List<DirectoryEntity> response = dirController.getAllDirectories();
+
+        assertEquals(directories.size(), response.size());
+
+        verify(directoryRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void testGetDirectoryById() {
         DirectoryEntity directory = new DirectoryEntity();
-        directory.setId(id);
+        directory.setId(1L);
         directory.setDirectoryName("Test Directory");
 
-    when(directoryRepository.findById(id)).thenReturn(Optional.of(directory));
+        when(directoryRepository.findById(1L)).thenReturn(Optional.of(directory));
 
-    ResponseEntity<DirectoryEntity> response = dirController.getDirectoryById(id);
+        Optional<DirectoryEntity> response = dirController.getDirectoryById(1L);
 
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(directory, response.getBody());
+        assertEquals(Optional.of(directory), response);
 
-    verify(directoryRepository, times(1)).findById(id);
-  }
-
-  @Test
-  void testGetDirectoryById_NonExistingId() {
-    Long id = 1L;
-
-    when(directoryRepository.findById(id)).thenReturn(Optional.empty());
-
-    ResponseEntity<DirectoryEntity> response = dirController.getDirectoryById(id);
-
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-
-    verify(directoryRepository, times(1)).findById(id);
-  }
+        verify(directoryRepository, times(1)).findById(1L);
+    }
 
     @Test
-    void testUpdateDirectory_ExistingId() {
-        Long id = 1L;
+    public void testUpdateDirectory() {
         DirectoryEntity existingDirectory = new DirectoryEntity();
-        existingDirectory.setId(id);
+        existingDirectory.setId(1L);
         existingDirectory.setDirectoryName("Existing Directory");
 
         DirectoryEntity updatedDirectory = new DirectoryEntity();
-        updatedDirectory.setId(id);
+        updatedDirectory.setId(1L);
         updatedDirectory.setDirectoryName("Updated Directory");
 
-    when(directoryRepository.findById(id)).thenReturn(Optional.of(existingDirectory));
-    when(directoryRepository.save(updatedDirectory)).thenReturn(updatedDirectory);
+        when(directoryRepository.findById(1L)).thenReturn(Optional.of(existingDirectory));
+        when(directoryRepository.save(updatedDirectory)).thenReturn(updatedDirectory);
 
-    ResponseEntity<DirectoryEntity> response = dirController.updateDirectory(
-      id,
-      updatedDirectory
-    );
+        ResponseEntity<DirectoryEntity> response = dirController.updateDirectory(1L, updatedDirectory);
 
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(updatedDirectory, response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(updatedDirectory, response.getBody());
 
-    verify(directoryRepository, times(1)).findById(id);
-    verify(directoryRepository, times(1)).save(updatedDirectory);
-  }
+        verify(directoryRepository, times(1)).findById(1L);
+        verify(directoryRepository, times(1)).save(updatedDirectory);
+    }
 
     @Test
-    void testUpdateDirectory_NonExistingId() {
-        Long id = 1L;
+    public void testDeleteDirectory() {
         DirectoryEntity directory = new DirectoryEntity();
-        directory.setId(id);
+        directory.setId(1L);
         directory.setDirectoryName("Test Directory");
 
-    when(directoryRepository.findById(id)).thenReturn(Optional.empty());
+        when(directoryRepository.findById(1L)).thenReturn(Optional.of(directory));
 
-    ResponseEntity<DirectoryEntity> response = dirController.updateDirectory(
-      id,
-      directory
-    );
+        ResponseEntity<Void> response = dirController.deleteDirectory(1L);
 
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 
-    verify(directoryRepository, times(1)).findById(id);
-    verify(directoryRepository, times(0)).save(directory);
-  }
-
-    @Test
-    void testDeleteDirectory_ExistingId() {
-        Long id = 1L;
-        DirectoryEntity directory = new DirectoryEntity();
-        directory.setId(id);
-        directory.setDirectoryName("Test Directory");
-
-    when(directoryRepository.findById(id)).thenReturn(Optional.of(directory));
-
-    ResponseEntity<Void> response = dirController.deleteDirectory(id);
-
-    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-
-    verify(directoryRepository, times(1)).findById(id);
-    verify(directoryRepository, times(1)).deleteById(id);
-  }
-
-  @Test
-  void testDeleteDirectory_NonExistingId() {
-    Long id = 1L;
-
-    when(directoryRepository.findById(id)).thenReturn(Optional.empty());
-
-    ResponseEntity<Void> response = dirController.deleteDirectory(id);
-
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-
-    verify(directoryRepository, times(1)).findById(id);
-    verify(directoryRepository, times(0)).deleteById(id);
-  }
+        verify(directoryRepository, times(1)).findById(1L);
+        verify(directoryRepository, times(1)).deleteById(1L);
+    }
 }
-*/
