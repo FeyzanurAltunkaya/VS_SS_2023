@@ -1,80 +1,94 @@
 import React, { useState, useEffect } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DirService from "../services/DirService";
 import { Link } from "react-router-dom";
 import AuthService from "../services/AuthService";
-//import UserDirService from "../services/UserDirService";
-//import {response} from "express";
-
+import { FaTrash, FaEdit } from "react-icons/fa";
 
 const TestDirectoriesHooks = () => {
-
-
-
-
-    const [directories, setDirectories] = useState([{}]);
+    const [directories, setDirectories] = useState([]);
     const [currentDirectory, setCurrentDirectory] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
 
-
-
     const currentUser = AuthService.getCurrentUser().id;
-    const username = AuthService.getCurrentUser().username;
-    //const currentUsername = user.username;
-    console.log(currentUser);
-
-
-
-
     const navigate = useNavigate();
 
-
-
-
     useEffect(() => {
-        retrieveTutorials();
+        retrieveDirectories();
     }, []);
 
-    /*
-    const retrieveTutorials = () => {
-        DirService.getAllDirectoriesByUser(currentUser) // Übergebe den currentUser als Argument
+    const retrieveDirectories = () => {
+        DirService.getDirectoriesByUserId(currentUser)
             .then((response) => {
                 setDirectories(response.data);
                 console.log(response.data);
             })
-            .catch((e) => {
-                console.log(e);
+            .catch((error) => {
+                console.log(error);
             });
     };
-*/
 
-    const retrieveTutorials = () => {
-        DirService.getAllDirectoriesByUserNeu(currentUser) // Übergebe den currentUser als Argument
+    const getOneDirectory = (directoryId) => {
+        DirService.getOneDirectoryByOneUser(currentUser, directoryId)
             .then((response) => {
-                setDirectories(response.data);
                 console.log(response.data);
             })
-            .catch((e) => {
-                console.log(e);
+            .catch((error) => {
+                console.log(error);
             });
     };
 
-    const AddDirectory =() =>{
-        navigate("/add-directory");
-    }
-    const refreshList = () => {
-        retrieveTutorials();
-        setCurrentDirectory(null);
-        setCurrentIndex(-1);
+    const addUserToDirectory = (directoryId) => {
+        DirService.addUserToDirectory(currentUser, directoryId)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
-    const setActiveTutorial = (tutorial, index) => {
-        setCurrentDirectory(tutorial);
+    const createDirectory = (directory) => {
+        DirService.createDirectory(directory)
+            .then((response) => {
+                console.log(response.data);
+                retrieveDirectories();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const updateDirectory = (directoryId, directory) => {
+        DirService.updateDirectory(directoryId, directory)
+            .then((response) => {
+                console.log(response.data);
+                retrieveDirectories();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const deleteDirectory = (directoryId) => {
+        DirService.deleteDirectory(directoryId)
+            .then((response) => {
+                console.log(response.data);
+                retrieveDirectories();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const setActiveDirectory = (directory, index) => {
+        setCurrentDirectory(directory);
         setCurrentIndex(index);
     };
 
-
-
+    const addDirectory = () => {
+        navigate("/add-directory");
+    };
 
     return (
         <div className="list row">
@@ -82,40 +96,36 @@ const TestDirectoriesHooks = () => {
                 <h4>Your Directories</h4>
 
                 <ul className="list-group">
-                    {
-                        directories.map((tutorial, index) => {
-                           // console.log(tutorial.user.username);
-                                //if ( currentUser === tutorial.user) {
-                                return (
-                                    <li
-                                        className={
-                                            "list-group-item " + (index === currentIndex ? "active" : "")
-                                        }
-                                        onClick={() => setActiveTutorial(tutorial, index)}
-                                        key={index}
-                                    >
-                                        <Link to={ "/directories/" + tutorial.id}>
-                                            {tutorial.directoryName}
-                                        </Link>
-                                    </li>
-                                );
-                            //}
-                            //else {
-                             //   return null; // Skip rendering directories that do not belong to the current user
-                            //}
-                        }
-                        )}
-                        </ul>
+                    {directories.map((directory, index) => (
+                        <li
+                            className={
+                                "list-group-item " + (index === currentIndex ? "active" : "")
+                            }
+                            onClick={() => setActiveDirectory(directory, index)}
+                            key={index}
+                        >
+                            <Link to={"/directories/" + directory.id}>
+                                {directory.directoryName}
+                            </Link>
+                            <div className="Listicons">
+                                <FaTrash
+                                    className="icon"
+                                    onClick={() => deleteDirectory(directory.id)}
+                                />
+                                <FaEdit
+                                    className="icon"
+                                    onClick={() => updateDirectory(directory.id, directory)}
+                                />
+                            </div>
+                        </li>
+                    ))}
+                </ul>
 
                 <div className="buttonsList">
-
-                <button
-                    className="m-3 btn btn-sm btn-danger"
-                    onClick={AddDirectory}
-                >
-                    Add
-                </button>
-            </div>
+                    <button className="m-3 btn btn-sm btn-danger" onClick={addDirectory}>
+                        Add
+                    </button>
+                </div>
             </div>
             <div className="col-md-6">
                 {currentDirectory ? (
@@ -127,7 +137,6 @@ const TestDirectoriesHooks = () => {
                             </label>{" "}
                             {currentDirectory.directoryName}
                         </div>
-
                     </div>
                 ) : (
                     <div>

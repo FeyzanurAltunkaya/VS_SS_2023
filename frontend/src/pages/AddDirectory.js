@@ -28,7 +28,7 @@ const AddDirectory = () => {
             user: {id: userId, username: username}
         };
 
-        DirService.create(data)
+        DirService.createDirectory(directory)
             .then(response => {
                 setDirectory({
                     id: response.data.id,
@@ -46,7 +46,7 @@ const AddDirectory = () => {
     const addUserToDirectory = () => {
         const directoryId = directory.id;
 
-        DirService.addUserToDirectory(userId, directoryId)
+        DirService.createDirectoryByUser(userId, directoryId)
             .then((response) => {
                 console.log(response.data);
                 // Handle success, e.g., show a success message or update the component state.
@@ -68,7 +68,7 @@ const AddDirectory = () => {
             {submitted ? (
                 <div>
                     <h4>You submitted successfully!</h4>
-                    <button className="btn btn-success" onClick={addUserToDirectory}>
+                     <button className="btn btn-success" onClick={addUserToDirectory}>
                         Add
                     </button>
                 </div>
@@ -86,7 +86,7 @@ const AddDirectory = () => {
                         />
                     </div>
 
-                    <button onClick={saveTutorial} className="btn btn-success">
+                    <button onClick={addUserToDirectory} className="btn btn-success">
                         Submit
                     </button>
                 </div>

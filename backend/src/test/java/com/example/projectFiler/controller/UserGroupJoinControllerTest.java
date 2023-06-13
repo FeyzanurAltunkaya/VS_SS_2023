@@ -34,7 +34,8 @@ public class UserGroupJoinControllerTest {
 
   @MockBean
   private GroupRepository groupRepository;
-/*
+
+  /*
   @Test
   public void testAddUserToGroup() throws Exception {
     // Mock user and group
@@ -78,13 +79,13 @@ public class UserGroupJoinControllerTest {
 
     // Perform the DELETE request
     mockMvc
-            .perform(delete("/usergroup/{userId}/groups/{groupId}", 1L, 1L))
-            .andExpect(status().isNoContent());
+      .perform(delete("/usergroup/{userId}/groups/{groupId}", 1L, 1L))
+      .andExpect(status().isNoContent());
 
     // Verify the interactions
     verify(userRepository, times(1)).findById(1L);
     verify(groupRepository, times(1)).findById(1L);
     verify(userGroupJoinRepository, times(1))
-            .deleteByUserAndGroup(userEntity, groupEntity);
+      .deleteByUserAndGroup(userEntity, groupEntity);
   }
 }

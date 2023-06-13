@@ -11,12 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-//@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/directory")
 public class DirController {
   private final DirectoryRepository directoryRepository;
-
   private final UserRepository userRepository;
 
   @Autowired
@@ -36,11 +34,21 @@ public class DirController {
     return ResponseEntity.status(HttpStatus.CREATED).body(createdDirectory);
   }
 
-  /**@GetMapping
-  public ResponseEntity<List<DirectoryEntity>> getAllDirectories() {
-    List<DirectoryEntity> directories = directoryRepository.findAll();
-   return ResponseEntity.ok(directories);
-  }*/
+  @PostMapping("/user/{userId}")
+  public ResponseEntity<DirectoryEntity> createDirectoryByUser(
+    @PathVariable Long userId,
+    @RequestBody DirectoryEntity directory
+  ) {
+    Optional<UserEntity> user = userRepository.findById(userId);
+    if (user.isPresent()) {
+      directory.setUser(user.get());
+      DirectoryEntity createdDirectory = directoryRepository.save(directory);
+      return ResponseEntity.status(HttpStatus.CREATED).body(createdDirectory);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
+  }
+
   @GetMapping
   public List<DirectoryEntity> getAllDirectories() {
     return directoryRepository.findAll();
@@ -48,7 +56,6 @@ public class DirController {
 
   @GetMapping("/{id}")
   public Optional<DirectoryEntity> getDirectoryById(@PathVariable Long id) {
-    // Optional<DirectoryEntity> directory = directoryRepository.findById(id);
     return directoryRepository.findById(id);
   }
 
@@ -68,7 +75,9 @@ public class DirController {
   }
 
   @GetMapping("/user/{userId}")
-  public ResponseEntity<List<DirectoryEntity>> getDirectoriesByUserId(@PathVariable Long userId) {
+  public ResponseEntity<List<DirectoryEntity>> getDirectoriesByUserId(
+    @PathVariable Long userId
+  ) {
     Optional<UserEntity> user = userRepository.findById(userId);
     if (user.isPresent()) {
       List<DirectoryEntity> directories = directoryRepository.findByUser(user.get());
@@ -78,17 +87,33 @@ public class DirController {
     }
   }
 
-  @DeleteMapping
-  public void deleteAllDirectories() {
-    directoryRepository.deleteAll();
-  }
-
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteDirectory(@PathVariable Long id) {
     Optional<DirectoryEntity> directory = directoryRepository.findById(id);
     if (directory.isPresent()) {
       directoryRepository.deleteById(id);
       return ResponseEntity.noContent().build();
+    } else {
+      return ResponseEntity.notFound().build();
+    }
+  }
+
+  @GetMapping("/user/{userId}/directory/{directoryId}")
+  public ResponseEntity<DirectoryEntity> getOneDirectoryByOneUser(
+    @PathVariable Long userId,
+    @PathVariable Long directoryId
+  ) {
+    Optional<UserEntity> user = userRepository.findById(userId);
+    if (user.isPresent()) {
+      Optional<DirectoryEntity> directory = directoryRepository.findByIdAndUser(
+        directoryId,
+        user.get()
+      );
+      if (directory.isPresent()) {
+        return ResponseEntity.ok(directory.get());
+      } else {
+        return ResponseEntity.notFound().build();
+      }
     } else {
       return ResponseEntity.notFound().build();
     }

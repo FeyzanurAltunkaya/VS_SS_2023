@@ -1,5 +1,5 @@
 package com.example.projectFiler.controller;
-
+/*
 import com.example.projectFiler.entity.DirectoryEntity;
 import com.example.projectFiler.entity.UserDirectoryJoinEntity;
 import com.example.projectFiler.entity.UserEntity;
@@ -48,7 +48,7 @@ public class UserDirectoryJoinController {
         .stream()
         .map(UserDirectoryJoinEntity::getDirectory)
         .collect(Collectors.toList());
-      return (ResponseEntity<List<DirectoryEntity>>) directories;
+      return ResponseEntity.ok(directories);
     } else {
       return ResponseEntity.notFound().build();
     }
@@ -134,3 +134,4 @@ public class UserDirectoryJoinController {
     }
   }
 }
+*/

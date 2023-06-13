@@ -1,68 +1,41 @@
-import http from "../http-commen"
+import http from "../http-commen";
 
-const getAll = () => {
-    return http.get("/directory");
+const createDirectory = (directory) => {
+    return http.post("/directory", directory);
 };
 
-const getAllDirectoriesByUser = userId =>{
-    return http.get(`/userdirectory/${userId}/directories`);
-}
-
-const getOneDirectoryOfUser = (userId, directoryId) => {
-    return http.get(`/${userId}/directories/${directoryId}`);
+const createDirectoryByUser = (userId, directory) => {
+    return http.post(`/directory/user/${userId}`, directory);
 };
 
-const addUserToDirectory = (userId, directoryId) => {
-    return http.post(`/userdirectory/${userId}/directories/${directoryId}`);
-};
-
-const get = id => {
+const getDirectoryById = (id) => {
     return http.get(`/directory/${id}`);
 };
 
-const create = data => {
-    return http.post("/directory", data);
+const updateDirectory = (id, directory) => {
+    return http.put(`/directory/${id}`, directory);
 };
 
-const update = (id, data) => {
-    return http.put(`/directory/${id}`, data);
-};
-
-const remove = id => {
+const deleteDirectory = (id) => {
     return http.delete(`/directory/${id}`);
 };
 
-const removeAll = () => {
-    return http.delete("/directory");
+const getDirectoriesByUserId = (userId) => {
+    return http.get(`/directory/user/${userId}`);
 };
 
-
-
-const deleteOneDirectoryOfUser = (userId, directoryId) => {
-    return http.delete(`userdirectory/${userId}/directories/${directoryId}`);
+const getOneDirectoryByOneUser = (userId, directoryId) => {
+    return http.get(`/directory/user/${userId}/directory/${directoryId}`);
 };
-
-const getAllDirectories = userId =>{
-    return http.get(`/users/${userId}/directories`);
-}
-
-const getAllDirectoriesByUserNeu = userId =>{
-    return http.get(`/userdirectory/${userId}/directories`);
-}
 
 const DirService = {
-    getAll,
-    get,
-    create,
-    update,
-    remove,
-    removeAll,
-    getAllDirectoriesByUser,
-    addUserToDirectory,
-    getOneDirectoryOfUser,
-    deleteOneDirectoryOfUser,
-    getAllDirectories,
-    getAllDirectoriesByUserNeu
+    createDirectory,
+    getDirectoryById,
+    updateDirectory,
+    deleteDirectory,
+    getDirectoriesByUserId,
+    getOneDirectoryByOneUser,
+    createDirectoryByUser
 };
 
 export default DirService;

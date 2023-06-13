@@ -18,12 +18,6 @@ public class UserEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Size(max = 20)
-  private String firstName;
-
-  @Size(max = 40)
-  private String lastName;
-
   @NotBlank
   @Size(max = 50)
   private String password;
@@ -48,9 +42,6 @@ public class UserEntity {
     inverseJoinColumns = @JoinColumn(name = "group_id")
   )
   private Set<GroupEntity> groups = new HashSet<>();
-
-  @OneToMany(mappedBy = "user")
-  private List<DirectoryEntity> directories;
 
   //new
   public UserEntity() {}
@@ -86,27 +77,11 @@ public class UserEntity {
     this.password = password;
   }
 
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
+  public void setRoles(Set<RoleEntity> roles) {
+    this.roles = roles;
   }
 
   public Set<RoleEntity> getRoles() {
     return roles;
-  }
-
-  public void setRoles(Set<RoleEntity> roles) {
-    this.roles = roles;
   }
 }

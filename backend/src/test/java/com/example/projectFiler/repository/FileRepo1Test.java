@@ -7,22 +7,21 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-
 @SpringBootTest
 @ActiveProfiles("test")
 public class FileRepo1Test {
+  private FileEntity1 file;
 
-    private FileEntity1 file;
+  @BeforeEach
+  public void setup() {
+    file = new FileEntity1();
+    file.setName("TestFile.txt");
+  }
 
-    @BeforeEach
-    public void setup() {
-        file = new FileEntity1();
-        file.setName("TestFile.txt");
-    }
-
-    @Test
-    public void testSetName() {
-        String newName = "NewFileName.txt";
-        file.setName(newName);
-        Assertions.assertEquals(newName, file.getName());
-    }}
+  @Test
+  public void testSetName() {
+    String newName = "NewFileName.txt";
+    file.setName(newName);
+    Assertions.assertEquals(newName, file.getName());
+  }
+}

@@ -31,8 +31,6 @@ class UserControllerTest {
     // Creating a test user
     UserEntity testUser = new UserEntity();
     testUser.setId(1L);
-    testUser.setFirstName("John");
-    testUser.setLastName("Doe");
 
     // Mocking the user repository
     when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));

@@ -1,4 +1,4 @@
-package com.example.projectFiler.repository;
+/* package com.example.projectFiler.repository;
 
 import com.example.projectFiler.entity.*;
 import java.util.List;
@@ -16,5 +16,6 @@ public interface UserDirectoryJoinRepository
     DirectoryEntity directory
   );
 
-    List<DirectoryEntity> findAllDirectoriesByUserId(Long userId);
+  List<DirectoryEntity> findAllDirectoriesByUserId(Long userId);
 }
+*/

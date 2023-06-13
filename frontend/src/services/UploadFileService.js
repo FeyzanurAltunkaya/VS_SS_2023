@@ -12,6 +12,18 @@ const UploadFileService = {
             },
         });
     },
+
+    getAllFiles: () => {
+        return axios.get(`${BASE_URL}/files1`);
+    },
+
+    updateFileName: (fileId, newFileName) => {
+        return axios.put(`${BASE_URL}/files1/${fileId}`, null, {
+            params: {
+                newFileName: newFileName,
+            },
+        });
+    },
 };
 
 export default UploadFileService;

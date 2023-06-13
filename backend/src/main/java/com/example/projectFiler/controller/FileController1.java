@@ -5,7 +5,6 @@ import com.example.projectFiler.repository.FileRepo1;
 import com.example.projectFiler.services.FileService1;
 import java.util.List;
 import java.util.Optional;
-
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,10 +48,11 @@ public class FileController1 {
       return ResponseEntity.ok(files);
     }
   }
+
   @PutMapping("/{fileId}")
   public ResponseEntity<String> updateFileName(
-          @PathVariable Long fileId,
-          @RequestParam String newFileName
+    @PathVariable Long fileId,
+    @RequestParam String newFileName
   ) {
     Optional<FileEntity1> optionalFile = fileRepo1.findById(fileId);
     if (optionalFile.isPresent()) {
@@ -65,4 +65,3 @@ public class FileController1 {
     }
   }
 }
-
