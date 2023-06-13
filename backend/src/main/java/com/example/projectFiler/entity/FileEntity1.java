@@ -16,6 +16,7 @@ public class FileEntity1 {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+  private String name;
 
   private String fileName;
 
@@ -26,5 +27,8 @@ public class FileEntity1 {
   public FileEntity1(String fileName, byte[] fileData) {
     this.fileName = fileName;
     this.fileData = fileData;
+  }
+  public void setName(String name) {
+    this.name = name;
   }
 }
