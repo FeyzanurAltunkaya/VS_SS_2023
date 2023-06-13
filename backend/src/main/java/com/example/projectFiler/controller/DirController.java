@@ -1,6 +1,7 @@
 package com.example.projectFiler.controller;
 
 import com.example.projectFiler.entity.DirectoryEntity;
+import com.example.projectFiler.entity.UserEntity;
 import com.example.projectFiler.repository.DirectoryRepository;
 import com.example.projectFiler.repository.UserRepository;
 import java.util.List;
@@ -61,6 +62,17 @@ public class DirController {
       directory.setId(id);
       DirectoryEntity updatedDirectory = directoryRepository.save(directory);
       return ResponseEntity.ok(updatedDirectory);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
+  }
+
+  @GetMapping("/user/{userId}")
+  public ResponseEntity<List<DirectoryEntity>> getDirectoriesByUserId(@PathVariable Long userId) {
+    Optional<UserEntity> user = userRepository.findById(userId);
+    if (user.isPresent()) {
+      List<DirectoryEntity> directories = directoryRepository.findByUser(user.get());
+      return ResponseEntity.ok(directories);
     } else {
       return ResponseEntity.notFound().build();
     }

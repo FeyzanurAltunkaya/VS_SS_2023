@@ -1,23 +1,17 @@
-import http from "../http-files";
+import axios from "axios";
 
-const upload = (file, onUploadProgress) => {
-    let formData = new FormData();
+const BASE_URL = "http://localhost:8080"; // Update with your backend URL
 
-    formData.append("file", file);
-
-    return http.post("/upload", formData, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-        },
-        onUploadProgress,
-    });
+const UploadFileService = {
+    upload: (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        return axios.post(`${BASE_URL}/files1`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+    },
 };
 
-const getFiles = () => {
-    return http.get("/files");
-};
-
-export default {
-    upload,
-    getFiles,
-};
+export default UploadFileService;

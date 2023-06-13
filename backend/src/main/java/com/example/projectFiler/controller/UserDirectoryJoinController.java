@@ -48,7 +48,7 @@ public class UserDirectoryJoinController {
         .stream()
         .map(UserDirectoryJoinEntity::getDirectory)
         .collect(Collectors.toList());
-      return ResponseEntity.ok(directories);
+      return (ResponseEntity<List<DirectoryEntity>>) directories;
     } else {
       return ResponseEntity.notFound().build();
     }

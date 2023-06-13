@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "files")
 @Getter
@@ -22,6 +25,8 @@ public class FileEntity1 {
   @Lob
   @Column(length = 10485760) // Adjust the length based on your database's maximum size limit for storing binary data
   private byte[] fileData;
+
+
 
   public FileEntity1(String fileName, byte[] fileData) {
     this.fileName = fileName;
