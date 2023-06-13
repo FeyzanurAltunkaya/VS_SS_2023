@@ -39,12 +39,16 @@ const removeAll = () => {
 
 
 const deleteOneDirectoryOfUser = (userId, directoryId) => {
-    return http.delete(`/${userId}/directories/${directoryId}`);
+    return http.delete(`userdirectory/${userId}/directories/${directoryId}`);
 };
 
+const getAllDirectories = userId =>{
+    return http.get(`/users/${userId}/directories`);
+}
 
-
-
+const getAllDirectoriesByUserNeu = userId =>{
+    return http.get(`/userdirectory/${userId}/directories`);
+}
 
 const DirService = {
     getAll,
@@ -56,7 +60,9 @@ const DirService = {
     getAllDirectoriesByUser,
     addUserToDirectory,
     getOneDirectoryOfUser,
-    deleteOneDirectoryOfUser
+    deleteOneDirectoryOfUser,
+    getAllDirectories,
+    getAllDirectoriesByUserNeu
 };
 
 export default DirService;

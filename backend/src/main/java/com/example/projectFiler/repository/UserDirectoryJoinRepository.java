@@ -15,4 +15,6 @@ public interface UserDirectoryJoinRepository
     UserEntity user,
     DirectoryEntity directory
   );
+
+    List<DirectoryEntity> findAllDirectoriesByUserId(Long userId);
 }

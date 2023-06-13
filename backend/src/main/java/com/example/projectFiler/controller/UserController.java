@@ -1,6 +1,8 @@
 package com.example.projectFiler.controller;
 
+import com.example.projectFiler.entity.DirectoryEntity;
 import com.example.projectFiler.entity.UserEntity;
+import com.example.projectFiler.repository.DirectoryRepository;
 import com.example.projectFiler.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.example.projectFiler.repository.UserDirectoryJoinRepository;
 
 @RestController
 //@CrossOrigin(origins = "*")
@@ -17,10 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
   @Autowired
   private final UserRepository userRepository;
+  private final UserDirectoryJoinRepository userDirectoryJoinRepository;
+  private final DirectoryRepository directoryRepository;
 
   @Autowired
-  public UserController(UserRepository userRepository) {
+  public UserController(UserRepository userRepository, UserDirectoryJoinRepository userDirectoryJoinRepository, DirectoryRepository directoryRepository) {
     this.userRepository = userRepository;
+    this.userDirectoryJoinRepository = userDirectoryJoinRepository;
+    this.directoryRepository = directoryRepository;
   }
 
   // Get all users
@@ -54,4 +61,16 @@ public class UserController {
       return ResponseEntity.notFound().build();
     }
   }
+
+
+  @GetMapping("/{userId}/directories")
+  public ResponseEntity<List<DirectoryEntity>> getAllDirectories(
+          @PathVariable Long userId
+  ) {
+    List<DirectoryEntity> directories = userDirectoryJoinRepository
+            .findAllDirectoriesByUserId(userId);
+    return ResponseEntity.ok(directories);
+  }
+
+
 }

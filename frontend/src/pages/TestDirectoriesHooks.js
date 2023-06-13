@@ -11,10 +11,12 @@ const TestDirectoriesHooks = () => {
 
 
 
+
     const [directories, setDirectories] = useState([{}]);
     const [currentDirectory, setCurrentDirectory] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
-    //const [searchDirName, setSearchDirName] = useState("");
+
+
 
     const currentUser = AuthService.getCurrentUser().id;
     const username = AuthService.getCurrentUser().username;
@@ -26,20 +28,33 @@ const TestDirectoriesHooks = () => {
 
     const navigate = useNavigate();
 
+
+
+
     useEffect(() => {
         retrieveTutorials();
     }, []);
 
-
+    /*
     const retrieveTutorials = () => {
-
-
-        DirService.getAll()
-            .then(response => {
+        DirService.getAllDirectoriesByUser(currentUser) // Übergebe den currentUser als Argument
+            .then((response) => {
                 setDirectories(response.data);
                 console.log(response.data);
             })
-            .catch(e => {
+            .catch((e) => {
+                console.log(e);
+            });
+    };
+*/
+
+    const retrieveTutorials = () => {
+        DirService.getAllDirectoriesByUserNeu(currentUser) // Übergebe den currentUser als Argument
+            .then((response) => {
+                setDirectories(response.data);
+                console.log(response.data);
+            })
+            .catch((e) => {
                 console.log(e);
             });
     };
@@ -58,16 +73,7 @@ const TestDirectoriesHooks = () => {
         setCurrentIndex(index);
     };
 
-    const removeAllTutorials = () => {
-        DirService.removeAll()
-            .then(response => {
-                console.log(response.data);
-                refreshList();
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
+
 
 
     return (
@@ -79,7 +85,7 @@ const TestDirectoriesHooks = () => {
                     {
                         directories.map((tutorial, index) => {
                            // console.log(tutorial.user.username);
-                            //if ( tutorial. === currentUser) {
+                                //if ( currentUser === tutorial.user) {
                                 return (
                                     <li
                                         className={
@@ -95,19 +101,13 @@ const TestDirectoriesHooks = () => {
                                 );
                             //}
                             //else {
-                               // return null; // Skip rendering directories that do not belong to the current user
+                             //   return null; // Skip rendering directories that do not belong to the current user
                             //}
                         }
                         )}
                         </ul>
 
                 <div className="buttonsList">
-                <button
-                    className="m-3 btn btn-sm btn-danger"
-                    onClick={removeAllTutorials}
-                >
-                    Remove All
-                </button>
 
                 <button
                     className="m-3 btn btn-sm btn-danger"
